@@ -1,8 +1,9 @@
-name: Cracked
+name: Cracked API
 description: >-
-  A tool-router/aggregator for AI agents that lets them discover, inspect, and run external tools/APIs through one API
-  key and one prepaid balance. Exposes 9,521 endpoints from 1,183 providers plus 50,000+ Apify actors via a REST/HTTP
-  API, hosted MCP server, and agent-native surfaces.
+  Cracked is a tool router / aggregation gateway for AI agents that fronts a large catalog of third-party tools
+  (scrapers, web search, data/enrichment, AI models) behind a single API key and prepaid balance. It exposes 9,521+
+  first-party endpoints from 1,183 providers plus 50,000+ Apify actors, publishing measured success rate, latency and
+  per-call price for each tool. Core workflow: discover, inspect, run, poll.
 url: https://raw.githubusercontent.com/api-evangelist/cracked-api/refs/heads/main/apis.yml
 created: '2026-09-03'
 modified: '2026-09-03'
@@ -19,12 +20,21 @@ tags:
   - llms.txt
   - agent skills
   - pay-per-call
+  - ai-agents
+  - agent-tools
+  - tool-router
+  - aggregator
+  - web-search
+  - web-scraping
+  - data-enrichment
+  - lead-generation
+  - ai-models
+  - developer-tools
 apis:
   - name: Cracked API
     description: >-
-      REST/JSON tool-router API with SSE streaming. Supports natural-language tool discovery, inspection, execution with
-      billing, wallet management, and agent self-registration. Base URL https://cracked.ai/v1, HTTP Bearer auth
-      (ck_live_ API key or OAuth 2.1 token).
+      REST API tool router for AI agents with discover/inspect/run/poll workflow, backed by an OpenAPI 3.1 contract, a
+      hosted MCP server, llms.txt, and a published agent skill.
     humanURL: https://cracked.ai/docs/api
     baseURL: https://cracked.ai/v1
     tags:
@@ -39,6 +49,16 @@ apis:
       - llms.txt
       - agent skills
       - pay-per-call
+      - ai-agents
+      - agent-tools
+      - tool-router
+      - aggregator
+      - web-search
+      - web-scraping
+      - data-enrichment
+      - lead-generation
+      - ai-models
+      - developer-tools
     properties:
       - type: OpenAPI
         url: https://cracked.ai/openapi.json
@@ -52,11 +72,17 @@ apis:
         url: https://cracked.ai/llms.txt
       - type: AgentSkill
         url: https://cracked.ai/SKILL.md
+      - type: Documentation
+        url: https://cracked.ai/docs/mcp
+      - type: Documentation
+        url: https://cracked.ai/docs/skill
 maintainers:
   - FN: Cracked AI LLC
     url: mailto:support@cracked.ai
+  - FN: Cracked API
+    url: https://cracked.ai
 generated:
   by: apis.io/add
   model: claude-opus-4-8
   confidence: 98
-  at: '2026-09-03T03:09:36.846Z'
+  at: '2026-09-03T03:10:50.573Z'
