@@ -1,0 +1,62 @@
+name: Cracked
+description: >-
+  A tool-router/aggregator for AI agents that lets them discover, inspect, and run external tools/APIs through one API
+  key and one prepaid balance. Exposes 9,521 endpoints from 1,183 providers plus 50,000+ Apify actors via a REST/HTTP
+  API, hosted MCP server, and agent-native surfaces.
+url: https://raw.githubusercontent.com/api-evangelist/cracked-api/refs/heads/main/apis.yml
+created: '2026-09-03'
+modified: '2026-09-03'
+specificationVersion: '0.21'
+tags:
+  - ai agents
+  - agent tools
+  - mcp
+  - tool router
+  - API aggregator
+  - web search
+  - web scraping
+  - data enrichment
+  - llms.txt
+  - agent skills
+  - pay-per-call
+apis:
+  - name: Cracked API
+    description: >-
+      REST/JSON tool-router API with SSE streaming. Supports natural-language tool discovery, inspection, execution with
+      billing, wallet management, and agent self-registration. Base URL https://cracked.ai/v1, HTTP Bearer auth
+      (ck_live_ API key or OAuth 2.1 token).
+    humanURL: https://cracked.ai/docs/api
+    baseURL: https://cracked.ai/v1
+    tags:
+      - ai agents
+      - agent tools
+      - mcp
+      - tool router
+      - API aggregator
+      - web search
+      - web scraping
+      - data enrichment
+      - llms.txt
+      - agent skills
+      - pay-per-call
+    properties:
+      - type: OpenAPI
+        url: https://cracked.ai/openapi.json
+      - type: Documentation
+        url: https://cracked.ai/docs
+      - type: Documentation
+        url: https://cracked.ai/docs/api
+      - type: MCPServer
+        url: https://cracked.ai/mcp
+      - type: LLMsTxt
+        url: https://cracked.ai/llms.txt
+      - type: AgentSkill
+        url: https://cracked.ai/SKILL.md
+maintainers:
+  - FN: Cracked AI LLC
+    url: mailto:support@cracked.ai
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 98
+  at: '2026-09-03T03:09:36.846Z'
