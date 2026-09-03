@@ -3,7 +3,7 @@ description: >-
   Cracked is a tool router for AI agents: one API key and one prepaid balance to discover, inspect, run and poll
   thousands of third-party tools. It exposes 9,521 endpoints from 1,183 providers plus 50,000+ Apify actors, publishing
   measured success rate, median latency and per-call price per tool.
-url: https://raw.githubusercontent.com/api-evangelist/cracked-api/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/cracked/refs/heads/main/apis.yml
 created: '2026-09-03'
 modified: '2026-09-03'
 specificationVersion: '0.21'
