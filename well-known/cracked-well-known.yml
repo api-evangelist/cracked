@@ -1,0 +1,51 @@
+generated: '2026-09-03'
+method: searched
+source: live probes of https://cracked.ai/.well-known/* on 2026-09-03
+path_echo_control: passed   # /.well-known/cracked-negative-control-9f2c41ab.json returned 404
+hosts:
+  - host: https://cracked.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: cracked-oauth-authorization-server.json
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: cracked-oauth-protected-resource.json
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        file: cracked-ai-plugin.json
+      - path: /.well-known/ucp.json
+        status: 404
+      - path: /.well-known/acp.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404
+      - path: /.well-known/mcp.json
+        status: 200
+        file: cracked-mcp.json
+      - path: /.well-known/agent-card.json
+        status: 308
+        note: permanent redirect to /.well-known/agent.json
+      - path: /.well-known/agent.json
+        status: 200
+        file: ../a2a/cracked-agent-card.json
+      - path: /.well-known/skills/index.json
+        status: 200
+        file: ../skills/cracked-skills-index.json
+note: >-
+  Real discovery surface: OAuth 2.1 authorization-server metadata (RFC 8414), protected-resource
+  metadata (RFC 9728), an MCP server manifest at /.well-known/mcp.json, an A2A agent card at the
+  legacy /.well-known/agent.json (canonical path 308-redirects to it), an agent skills index, and
+  a legacy ai-plugin.json. No security.txt is served (404).

@@ -1,0 +1,34 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/docs/cli
+name: cracked-ai
+package: https://www.npmjs.com/package/cracked-ai
+version_tested: 0.3.1   # docs state "tested with cracked-ai 0.3.1"; npm latest 0.3.1 (2026-09-03)
+install:
+  - npx cracked-ai
+  - npm install -g cracked-ai
+configuration:
+  keys_store: ~/.cracked/config.json (0600)
+  env: [CRACKED_API_KEY, CRACKED_API_URL]
+commands:
+  keys:
+    - cracked keys add -l <label> -k ck_live_...
+    - cracked keys list
+    - cracked keys activate -l <label>
+  discovery:
+    - cracked discover "<query>" -l <limit>
+    - cracked inspect -p <provider> -e <endpoint>
+  execution:
+    - cracked run -p <provider> -e <endpoint> -i '<json>' -o out.json
+    - cracked runs
+    - cracked runs get -r <runId>
+    - cracked runs stop -r <runId>
+  account:
+    - cracked balance
+    - cracked whoami
+  no_key_try:
+    - cracked try "<query>"   # POST /v1/try, no key needed
+flags:
+  - "-j raw JSON output"
+  - "-w <seconds> block on async runs with backoff"
+notes: non-zero exit code on HTTP errors so it composes in shell pipelines

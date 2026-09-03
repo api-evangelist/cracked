@@ -1,0 +1,17 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/docs/async
+spec_type: Webhooks   # no AsyncAPI document is published; this captures the documented webhook surface
+webhooks:
+  - name: run.completed
+    subscribe: pass webhook_url (https) on POST /v1/run
+    payload: '{ "event": "run.completed", "run": { ...full run record... } }'
+    delivery: POSTed once when the run reaches a terminal state, 10-second timeout, best-effort (poll GET /v1/runs/{id} for a guarantee)
+streaming:
+  - name: run event stream (SSE)
+    subscribe: 'POST /v1/run with "stream": true'
+    events: [queued, routed, progress, fallback, result]
+    docs: https://cracked.ai/docs/streaming
+notes: >-
+  Event surface is a single terminal-state webhook plus server-sent events on streaming runs;
+  no AsyncAPI spec is published, so nothing was saved verbatim and none was fabricated.

@@ -1,0 +1,81 @@
+generated: '2026-09-03'
+method: searched
+source: registry.npmjs.org + pypi.org metadata endpoints, probed 2026-09-03; package list from https://cracked.ai/docs/sdks
+packages:
+  - language: javascript
+    registry: npm
+    name: cracked-ai
+    url: https://www.npmjs.com/package/cracked-ai
+    install: npx cracked-ai
+    official: true
+    kind: cli
+    version: 0.3.1
+    published: '2026-09-03'
+  - language: typescript
+    registry: npm
+    name: cracked-ai-sdk
+    url: https://www.npmjs.com/package/cracked-ai-sdk
+    install: npm install cracked-ai-sdk
+    official: true
+    kind: sdk
+    version: 0.1.0
+    published: '2026-09-02'
+  - language: typescript
+    registry: npm
+    name: cracked-ai-vercel
+    url: https://www.npmjs.com/package/cracked-ai-vercel
+    install: npm install cracked-ai-vercel
+    official: true
+    kind: framework-adapter (Vercel AI SDK)
+    version: 0.1.0
+    published: '2026-09-02'
+  - language: python
+    registry: pypi
+    name: cracked-ai
+    url: https://pypi.org/project/cracked-ai/
+    install: pip install cracked-ai
+    official: true
+    kind: sdk
+    version: 0.1.0
+    published: '2026-09-02'
+  - language: python
+    registry: pypi
+    name: cracked-ai-langchain
+    url: https://pypi.org/project/cracked-ai-langchain/
+    install: pip install cracked-ai-langchain
+    official: true
+    kind: framework-adapter (LangChain)
+    version: 0.1.0
+    published: '2026-09-02'
+  - language: python
+    registry: pypi
+    name: cracked-ai-crewai
+    url: https://pypi.org/project/cracked-ai-crewai/
+    install: pip install cracked-ai-crewai
+    official: true
+    kind: framework-adapter (CrewAI)
+    version: 0.1.0
+    published: '2026-09-02'
+  - language: python
+    registry: pypi
+    name: cracked-ai-openai-agents
+    url: https://pypi.org/project/cracked-ai-openai-agents/
+    install: pip install cracked-ai-openai-agents
+    official: true
+    kind: framework-adapter (OpenAI Agents SDK)
+    version: 0.1.0
+    published: '2026-09-02'
+  - language: javascript
+    registry: npm
+    name: n8n-nodes-cracked
+    url: https://www.npmjs.com/package/n8n-nodes-cracked
+    install: n8n community node
+    official: false
+    kind: community n8n node (linked from the provider's own integrations docs)
+    version: 0.1.0
+    published: '2026-09-03'
+notes: >-
+  All eight packages verified live on their registries with version + publish date read from the
+  registry metadata endpoints. Everything was published 2026-09-01..03 — the platform launched days
+  before this profile, so version currency and API version (0.3.0) are in step. The docs also link
+  a GitHub org (github.com/cracked-ai-org) that returned 404 on probe (private or not yet public).

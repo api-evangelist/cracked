@@ -1,0 +1,20 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/llms.txt + https://cracked.ai/changelog + https://cracked.ai/status
+versioning:
+  scheme: uri-path
+  current: v1
+  platform_version: 0.8.0   # from /.well-known/mcp.json and the changelog
+  docs: https://cracked.ai/docs/api
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: no published deprecation policy found; the platform is days old (first changelog entry 2026-09-01)
+sla:
+  url: https://cracked.ai/docs/enterprise
+  note: enterprise page advertises SSO, invoicing and audit logs; no public uptime target found
+status_page: https://cracked.ai/status
+status_page_probe: {status: 200, fetched: '2026-09-03'}
+health_endpoint: https://cracked.ai/v1/health   # public JSON, probed 200
+changelog: https://cracked.ai/changelog
+deprecated_operations: []

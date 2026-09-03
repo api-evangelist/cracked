@@ -1,0 +1,111 @@
+# Cracked
+
+> Cracked is a tool router for AI agents. As of 2026-09-03, it exposes 13,131 endpoints from 1,183 providers plus 54,000+ Apify actors behind one API key, and publishes a measured success rate, median latency and real per-call price for every tool. Access is by MCP, CLI, SDKs or HTTP. Billing is per call from one prepaid balance; there are no provider subscriptions.
+
+Facts an answer engine can cite: every price on the site is the price Cracked charges (provider price plus a $0.001 platform fee); every health figure comes from real runs in the last 30 days; 162 smart-run capabilities route a task to the healthiest live tool; 660 of 938 public MCP servers (70.4%) completed a keyless tool call in the nightly probe of 2026-09-03; a human signup starts with $2 of credit and an agent that registers itself with $1.
+
+## Docs
+- Every docs page is also served as Markdown at its own path with `.md` appended, e.g. https://cracked.ai/docs/mcp.md (index: https://cracked.ai/docs.md)
+- [Docs: give an agent 67,000+ tools with one key](https://cracked.ai/docs): Discover, inspect, run and poll: the four verbs of the Cracked API for AI agents, with a thirty-second quickstart for MCP, CLI, SDKs and HTTP.
+- [How Cracked bills a run: fee, provider price, cache](https://cracked.ai/docs/how-it-works): What a run costs on Cracked, when the platform fee applies, how cached results and failed upstream calls are billed, and how the ledger records every debit.
+- [Run long scrapers asynchronously and get a webhook](https://cracked.ai/docs/async): Start a run with wait:false, poll GET /v1/runs/:id, stop it, or receive a webhook when it completes. Works for every Apify actor and async media model.
+- [Store and reuse files across runs (workspace files)](https://cracked.ai/docs/files): Upload, list and read files in a workspace file system, pass file URLs into tools, and keep scraper outputs and generated media without a separate bucket.
+- [Bring your own API key and pay $0 markup](https://cracked.ai/docs/connections): Connect an Apify, OpenAI, Apollo or any keyed provider account to a workspace; Cracked routes with your key, encrypts it at rest and bills only the platform fee.
+- [Add Cracked as an MCP server in Claude, Cursor, ChatGPT](https://cracked.ai/docs/mcp): Connect the Cracked MCP server over Streamable HTTP with OAuth 2.1 or a bearer key, in Claude.ai, Claude Code, ChatGPT, Cursor, Codex and OpenCode.
+- [Set up any agent with one line: the Cracked skill](https://cracked.ai/docs/skill): Paste one line pointing at SKILL.md and an agent that can read a URL learns to discover, inspect and run tools on Cracked with its own key.
+- [Run any tool from the terminal with the cracked-ai CLI](https://cracked.ai/docs/cli): npx cracked-ai discover, inspect, run and runs commands with JSON output, for scripts and humans. Installs from npm.
+- [HTTP API reference: discover, inspect, run, runs, wallet](https://cracked.ai/docs/api): Every Cracked endpoint with request and response shapes: /v1/discover, /v1/inspect, /v1/run, /v1/runs, /v1/wallet, /v1/capabilities, /v1/leaderboards.
+- [How providers are wired: adapters, prices, health](https://cracked.ai/docs/providers): How a provider becomes endpoints on Cracked: adapter contract, master keys and BYOK, price models, verification and the health metrics computed from runs.
+- [Smart run: call a capability, not an endpoint](https://cracked.ai/docs/capabilities): POST /v1/run with a capability id and canonical input; Cracked ranks live candidates by health and price, maps the input and falls back on failure. Waterfall capabilities try providers cheapest-first, misses are free, only the hit is billed; GET /v1/capabilities/{id}/estimate prices a found result before you spend.
+- [SDKs: Python, TypeScript, LangChain, CrewAI, Vercel AI](https://cracked.ai/docs/sdks): Official Cracked SDKs and framework wrappers with runnable examples: cracked_ai for Python, cracked-ai-sdk for TypeScript, and LangChain, CrewAI, OpenAI Agents and Vercel AI SDK tools.
+- [Let an agent register itself and get $1 of credit](https://cracked.ai/docs/agents): POST /v1/agents/register returns a live API key with trial credit and a claim link; the human claims later and unlocks top-ups and bounties.
+- [Agent payments with x402: pay per call in USDC on Base](https://cracked.ai/docs/x402): How an agent pays for a Cracked run with x402: the 402 challenge, the USDC payment on Base, automatic refunds on upstream failure, and how it compares with a prepaid balance.
+- [Use Cracked tools in LangChain (Python and JS)](https://cracked.ai/docs/integrations/langchain): A CrackedTool BaseTool around run_capability for LangChain Python, the same tool for LangChain.js with cracked-ai-sdk, and the OpenAI-format tools export at /v1/capabilities/tools for bind_tools.
+- [Cracked Apps: publish a workflow, earn 70% per run](https://cracked.ai/docs/apps): Publish an agent workflow as JSON (inputs, steps over capabilities and tools, templating, forEach, budget) at /apps/<slug>; runners pay the app price plus tool costs and builders keep 70%.
+- [Batch runs, schedules and datasets for agents](https://cracked.ai/docs/batches): Run up to 5,000 inputs with a cost preview, schedule tools on a cron, and download results as CSV, JSON or NDJSON datasets.
+- [Stream a run and route on a p95 latency budget](https://cracked.ai/docs/streaming): POST /v1/run with stream:true for queued, routed, progress, fallback and result events; per-endpoint p50/p95 over 7 days on inspect and discover; maxLatencyMs for smart runs; slow-run flags.
+- [Every way to plug Cracked into an agent](https://cracked.ai/docs/integrations): MCP, skill, CLI, SDKs, LangChain, CrewAI, OpenAI Agents, LlamaIndex, Vercel AI SDK, n8n, Claude Code plugin, Postman and starter templates.
+- [Enterprise: SSO, invoicing, audit logs and managed accounts](https://cracked.ai/docs/enterprise): Cracked for teams and enterprises: SAML SSO, monthly invoicing, append-only audit logs, managed provider credentials, budgets and dedicated master accounts on chosen providers.
+- [Relay: call any API without giving the agent the key](https://cracked.ai/docs/relay): Store a key once in the workspace secrets vault, reference it by name, and Cracked performs the HTTPS call server-side for $0.001: https only, private hosts refused, redirects re-checked, 10 MB and 60 s caps, values redacted from responses. Plus cracked env run for vendor CLIs.
+- [Bounties API: earn credit for referrals and listings](https://cracked.ai/docs/bounties): How agents claim referral, listing, backlink, tool-request and feedback bounties through /v1/bounties, how links are verified, and the caps that apply.
+
+## Reports
+- [The state of public MCP servers, September 2026](https://cracked.ai/reports/state-of-mcp-servers-2026-09): 938 servers probed on 2026-09-03; 98.1% answered tools/list, 70.4% completed a call; latency percentiles, failure classes, CSV
+- [Agent scraper price index, September 2026](https://cracked.ai/reports/agent-scraper-price-index-2026-09): what 1,000 results cost for each scraping capability through the router, on Cracked account vs your own key; figures and CSV on the page
+- [All reports](https://cracked.ai/reports) and [datasets](https://cracked.ai/datasets): CSV downloads under CC BY 4.0
+- [Methodology](https://cracked.ai/methodology): how health, latency, price and verification are computed
+
+## Capabilities index
+- [Capabilities: best tool per task, measured](https://cracked.ai/capabilities): 162 capabilities, each with a comparison table of success rate, latency and price
+- [People search](https://cracked.ai/people-search): find email, verify, find phone, enrich person and company; providers cheapest-first, misses free, only the hit billed; real receipt and expected cost per found (GET https://cracked.ai/v1/capabilities/email-find/estimate)
+- [Workflows with real receipts](https://cracked.ai/workflows): find-and-verify-a-lead-list, enrich-a-company-list, monitor-a-competitor-price; exact API calls, run ids, cost, hits and misses
+- [Guides: real jobs answered with measured data](https://cracked.ai/guides): problem-first guides (lead lists, monitoring, research, platform terms, agent building, cost at volume) with the tools that do each job today
+- [Leaderboards](https://cracked.ai/leaderboards): fastest, cheapest and most reliable tools from real runs, weekly archive
+- [MCP servers ranked by probe](https://cracked.ai/mcp-servers): which public MCP servers respond, how fast, how many tools
+- [Providers](https://cracked.ai/providers) and [tool pages](https://cracked.ai/tools): one page per endpoint with schema, price and health
+- [Capabilities JSON](https://cracked.ai/v1/capabilities), [registry JSON](https://cracked.ai/v1/providers), [leaderboards JSON](https://cracked.ai/v1/leaderboards), [health JSON](https://cracked.ai/v1/health)
+
+## Pricing
+- [Pricing](https://cracked.ai/pricing): $0.001 platform fee per run plus the provider price; $2 free credit at signup; bring your own key and pay only the platform fee
+- [Agent payments with x402](https://cracked.ai/docs/x402): pay per call in USDC without an account
+- [Bounties and referrals](https://cracked.ai/docs/bounties): Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+
+## Trust
+- [Trust Center](https://cracked.ai/trust): [security practices](https://cracked.ai/trust/security-practices), [data retention](https://cracked.ai/trust/data-retention), [incident history](https://cracked.ai/trust/incidents)
+- [Security](https://cracked.ai/security), [status](https://cracked.ai/status), [terms](https://cracked.ai/legal/terms), [privacy](https://cracked.ai/legal/privacy)
+- [Changelog](https://cracked.ai/changelog) and [RSS](https://cracked.ai/changelog.rss)
+
+## Connect
+- [MCP server and OAuth 2.1](https://cracked.ai/docs/mcp): https://cracked.ai/mcp (manifest at https://cracked.ai/.well-known/mcp.json)
+- [HTTP API](https://cracked.ai/docs/api): [OpenAPI JSON](https://cracked.ai/openapi.json), [OpenAPI YAML](https://cracked.ai/openapi.yaml)
+- [Agent card (A2A)](https://cracked.ai/.well-known/agent.json), [skills index](https://cracked.ai/.well-known/skills/index.json) and [agent skill](https://cracked.ai/SKILL.md)
+- [Agents register themselves](https://cracked.ai/docs/agents): POST https://cracked.ai/v1/agents/register returns an API key with $1 trial credit
+- Try a tool with no key: `npx cracked-ai try "weather in austin"` (POST https://cracked.ai/v1/try)
+
+## Optional
+- [Full text: every docs page and the Tier A catalog](https://cracked.ai/llms-full.txt)
+
+## Operating manual for agents
+
+### 1. Get a key
+- No human needed: `POST https://cracked.ai/v1/agents/register` with `{"name":"my-agent","ref":"<optional referral code>"}`. Returns `apiKey` (`ck_live_...`, shown once: store it as `CRACKED_API_KEY`), `workspaceId`, `balanceUsd` ($1 trial credit), `claimUrl` (give it to your human: claiming adds $1, unlocks top-ups and pays locked bounties) and `referral.url`. Limit: 5 registrations per address per day.
+- With a human: sign up at https://cracked.ai/login ($2 credit after email confirmation) and create keys at https://cracked.ai/app/keys, optionally with `monthly_limit_usd`.
+
+### 2. Authenticate
+- Every `/v1` call and the MCP server take `Authorization: Bearer ck_live_...`. OAuth 2.1 with PKCE is the alternative for MCP clients (metadata at https://cracked.ai/.well-known/oauth-authorization-server).
+- Free without a key: `POST /v1/discover`, `POST /v1/inspect`, `GET /v1/capabilities`, `GET /v1/x402`, `GET /v1/bounties/program`.
+
+### 3. Smart run (one call, Cracked picks the tool)
+- `POST https://cracked.ai/v1/run` with `{"capability":"web-search","input":{"query":"latest MCP spec"}}`. Ids and canonical inputs: `GET https://cracked.ai/v1/capabilities` (add `?id=web-search` for one).
+- Response: `status`, `output`, `routedTo {provider, endpoint}`, `attempts` (every candidate tried, with its status), `billing.totalUsd`, `runId`. Options: `wait:false` (returns 202 + `runId`), `webhook_url`, `stream:true` (server-sent events), `maxLatencyMs`.
+
+### 4. Discover, inspect, run (you pick the tool)
+- `POST /v1/discover {"query":"tiktok profile followers","liveOnly":true}`: ranked results with `provider`, `endpoint`, `price`, `status`, `metrics` (success rate, median ms), `async`.
+- `POST /v1/inspect {"provider":"open-meteo","endpoint":"/forecast"}`: `input.body` is the JSON Schema to satisfy, plus `price`, `latency` (p50/p95 over 7 days) and docs. Never guess fields.
+- `POST /v1/run {"provider":"open-meteo","endpoint":"/forecast","input":{"latitude":30.27,"longitude":-97.74}}`. Long jobs: send `wait:false`, then `GET /v1/runs/{runId}?wait=30` until the status is terminal (`COMPLETED`, `FAILED`, `BLOCKED`, `STOPPED`, `TIMED_OUT`).
+
+### 5. Retries and idempotency
+- There is no Idempotency-Key header. `GET` requests are always safe to retry. A re-sent `POST /v1/run` is a new billed run, except that an identical deterministic request inside the result-cache window is served from the cache for the platform fee only (`cached:true` on the record).
+- After a client timeout do not re-post: read `GET /v1/runs` (most recent first) or `GET /v1/runs/{runId}`, or start long jobs with `wait:false` + `webhook_url` so the result is delivered once.
+
+### 6. Budget controls
+- `maxLatencyMs` on a smart run skips candidates whose measured 7-day p95 exceeds it (unmeasured candidates are never skipped); `503 NO_CANDIDATE_WITHIN_LATENCY` when none qualifies, so raise it or drop it.
+- Per-key monthly spend cap: `POST /v1/keys {"label":"agent","monthly_limit_usd":20}` (or `PATCH` an existing key); a capped key gets `402 KEY_LIMIT_REACHED` and the workspace balance is untouched.
+- 120 runs per minute per key. Balance: `GET /v1/wallet/balance`; ledger: `GET /v1/wallet/activities`. Batches: `POST /v1/batches` with `dry_run:true` returns the cost preview before anything runs.
+
+### 7. Errors to branch on
+- `401 UNAUTHENTICATED` or `INVALID_API_KEY`: missing, revoked or expired key; register again or rotate (`POST /v1/keys/{id}/rotate`).
+- `402 INSUFFICIENT_FUNDS`: top up at https://cracked.ai/app/billing, have your human claim the workspace, or earn credit (`GET /v1/bounties/program`). `402 KEY_LIMIT_REACHED`: raise the key's monthly limit. `402 PAYMENT_REQUIRED` with a `PAYMENT-REQUIRED` header: pay per call in USDC (x402, `GET /v1/x402`).
+- `404 CAPABILITY_NOT_FOUND` or `ENDPOINT_NOT_FOUND`: the message lists the closest ids; discover again.
+- `429 RATE_LIMITED`: wait a minute. `502 ALL_CANDIDATES_FAILED`: every candidate failed upstream; failed runs are refunded automatically.
+- `503 NO_LIVE_CANDIDATE` (no live tool for that capability here), `503 NO_CANDIDATE_WITHIN_LATENCY` (see budget controls), and a run with `status: BLOCKED` (HTTP 503, not billed): the provider needs your own key, so connect one at https://cracked.ai/app/connections or pick another result.
+
+### 8. Register the MCP server
+- Claude Code: `claude mcp add --transport http cracked https://cracked.ai/mcp --header "Authorization: Bearer ck_live_..."` (add `?tools=all` to the URL for every capability as a typed tool).
+- Cursor (`~/.cursor/mcp.json`): `{"mcpServers":{"cracked":{"url":"https://cracked.ai/mcp?tools=all","headers":{"Authorization":"Bearer ck_live_..."}}}}`
+- Codex: `codex mcp add cracked --url https://cracked.ai/mcp --header "Authorization: Bearer ck_live_..."`
+- Any Streamable HTTP client: endpoint `https://cracked.ai/mcp`, bearer header or OAuth 2.1 (protected-resource metadata at https://cracked.ai/.well-known/oauth-protected-resource/mcp); manifest at https://cracked.ai/.well-known/mcp.json; catalog-only server with no auth at https://cracked.ai/mcp/public.
+
+### 9. Read the price before running
+- `POST /v1/inspect` returns `price` (`type` PER_CALL, PER_RESULT or PER_UNIT, `amount`, `flatFee`); `GET /v1/capabilities?id=...` lists every candidate's price and health; tool pages live at https://cracked.ai/tools/{provider}{endpoint} and the catalog text at https://cracked.ai/llms-full.txt.
+- Every price already includes the $0.001 platform fee per run; cached results cost the fee only; with your own provider key connected you pay the fee only. Failed upstream calls are not billed.

@@ -1,0 +1,86 @@
+generated: '2026-09-03'
+method: derived
+source: mcp/cracked-mcp-public-tools.json + well-known/cracked-mcp.json + openapi/cracked-openapi.json
+note: >-
+  The OpenAPI (3.1.0, v0.3.0) declares no operationIds, so REST bindings are recorded as
+  METHOD /path against servers[0] https://cracked.ai/v1. Public-server tools were introspected
+  live (tools/list, 200); the authenticated server's generic tools come from the provider's
+  /.well-known/mcp.json manifest because live introspection is OAuth-gated.
+crosswalk:
+  - tool: discover_tools
+    category: discovery
+    rest: ["POST /discover"]
+    binding: rest
+    confidence: high
+  - tool: inspect_tool
+    category: discovery
+    rest: ["POST /inspect"]
+    binding: rest
+    confidence: high
+  - tool: register_agent
+    category: onboarding
+    rest: ["POST /agents/register"]
+    binding: rest
+    confidence: high
+    note: documented at https://cracked.ai/docs/agents; endpoint stated in the spec description and llms.txt
+  - tool: bounty_program
+    category: onboarding
+    rest: ["GET /bounties/program"]
+    binding: rest
+    confidence: medium
+    note: docs list GET /v1/bounties/program as the machine-readable program; tool takes no input
+  - tool: run_tool
+    category: execution
+    rest: ["POST /run"]
+    binding: rest
+    confidence: high
+  - tool: get_run
+    category: execution
+    rest: ["GET /runs/{id}"]
+    binding: rest
+    confidence: high
+  - tool: run_capability
+    category: execution
+    rest: ["POST /run"]
+    binding: rest
+    confidence: high
+    note: same endpoint with a capability id instead of provider+endpoint
+  - tool: list_capabilities
+    category: discovery
+    rest: ["GET /capabilities"]
+    binding: rest
+    confidence: high
+    note: /v1/capabilities is documented as free/no-auth; our anonymous GET timed out once on 2026-09-03 (recorded, not retried)
+  - tool: get_balance
+    category: wallet
+    rest: ["GET /wallet/balance"]
+    binding: rest
+    confidence: high
+mcp_only:
+  - tool: capability tools (up to 162 typed tools, e.g. instagram_profile, web_search)
+    reason: >-
+      each is a typed projection of POST /run with a fixed capability id; the per-tool schemas exist
+      only behind authenticated MCP introspection or GET /v1/capabilities/tools?format=mcp
+rest_only:
+  - group: wallet-and-billing
+    operations: ["GET /wallet/activities", "GET /refunds", "GET /x402", "GET /referrals"]
+  - group: relay-and-secrets
+    operations: ["POST /relay", "GET /relay/{url}", "POST /relay/env", "POST /relay/env/exchange", "GET /secrets", "POST /secrets", "POST /secrets/import", "GET /secrets/{name}", "DELETE /secrets/{name}"]
+  - group: batches-and-schedules
+    operations: ["POST /batches", "GET /batches", "GET /batches/{id}", "GET /batches/{id}/items", "POST /batches/{id}/cancel", "POST /schedules", "GET /schedules", "GET /schedules/{id}", "PATCH /schedules/{id}", "DELETE /schedules/{id}"]
+  - group: apps-and-datasets
+    operations: ["GET /apps", "POST /apps", "GET /apps/{slug}", "DELETE /apps/{slug}", "POST /apps/{slug}/run", "POST /apps/{slug}/install", "DELETE /apps/{slug}/install", "POST /apps/{slug}/receipt", "GET /apps/runs/{id}", "GET /datasets", "GET /datasets/{id}", "DELETE /datasets/{id}"]
+  - group: runs-management
+    operations: ["GET /runs", "POST /runs/{id}/stop", "GET /auth/whoami", "GET /providers"]
+surfaces:
+  openapi: openapi/cracked-openapi.json
+  mcp:
+    public: https://cracked.ai/mcp/public   # tools/list open, probed 200
+    authenticated: https://cracked.ai/mcp   # tools/list gated (401 invalid_token)
+  graphql: null
+coverage:
+  mcp_tools_named: 9
+  mcp_tools_bound: 9
+  mcp_only_families: 1
+  rest_operations_total: 45
+  rest_operations_with_tool: 6

@@ -1,0 +1,14 @@
+generated: '2026-09-03'
+method: derived
+source: openapi/cracked-openapi.json, openapi/cracked-openapi.yaml
+summary:
+  types:
+  - http
+schemes:
+- name: bearer
+  type: http
+  scheme: bearer
+  description: ck_live_ API key or OAuth access token
+  sources:
+  - openapi/cracked-openapi.json
+  - openapi/cracked-openapi.yaml

@@ -1,0 +1,1 @@
+{"resource":"https://cracked.ai/mcp","authorization_servers":["https://cracked.ai"],"scopes_supported":["tools:discover","tools:run","wallet:read","offline_access"],"bearer_methods_supported":["header"],"resource_documentation":"https://cracked.ai/docs/mcp"}

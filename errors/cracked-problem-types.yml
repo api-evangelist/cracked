@@ -1,0 +1,59 @@
+generated: '2026-09-03'
+method: derived
+source: openapi/cracked-openapi.json 4xx/5xx responses, enriched from https://cracked.ai/docs/api and the /.well-known/mcp.json instructions
+format: custom-json-envelope   # {code, error, message}, not RFC 9457
+envelope:
+  shape: '{ "code": <int>, "error": "<MACHINE_CODE>", "message": "<human text>" }'
+  note: 4xx replies often carry a hints object with the recommended next step
+problems:
+  - status: 400
+    codes: [RELAY_BAD_REQUEST, RELAY_REFUSED]
+    title: Bad request / relay refused
+    detail: RELAY_REFUSED covers private or local hosts, which the relay refuses by policy
+  - status: 401
+    codes: [UNAUTHORIZED]
+    title: Missing or invalid API key
+    remediation: send Authorization Bearer ck_live_... or complete the OAuth flow
+  - status: 402
+    codes: [INSUFFICIENT_FUNDS, TAG_LIMIT_REACHED, TRIAL_ALLOWANCE_EXCEEDED, KEY_LIMIT_REACHED]
+    title: Payment required
+    detail: >-
+      carries a PAYMENT-REQUIRED header so an x402 client can pay per call in USDC and retry;
+      TAG_LIMIT_REACHED and TRIAL_ALLOWANCE_EXCEEDED include resets_at and are refused before any
+      provider is called
+    remediation: top up at https://cracked.ai/app/billing, earn credit via bounties, or pay with x402
+  - status: 404
+    codes: [CAPABILITY_NOT_FOUND]
+    title: Not found
+    detail: unknown capability ids return the five closest ids
+  - status: 409
+    codes: [IDEMPOTENCY_MISMATCH, PAYMENT_REPLAY]
+    title: Conflict
+    detail: >-
+      IDEMPOTENCY_MISMATCH - the Idempotency-Key was used with a different body in the last 24h;
+      PAYMENT_REPLAY - that x402 payment was already used
+  - status: 410
+    codes: [ENV_TOKEN_USED, ENV_TOKEN_EXPIRED]
+    title: Relay env token gone
+  - status: 429
+    codes: [RATE_LIMITED]
+    title: Rate limited
+    detail: key over its per-minute limit (default 120 runs/min); auth resend is 1/min with Retry-After
+  - status: 502
+    codes: [RELAY_DNS, RELAY_CONNECT, RELAY_TOO_LARGE, RELAY_TOO_MANY_REDIRECTS]
+    title: Relay upstream failure
+  - status: 503
+    codes: [NO_LIVE_CANDIDATE, NO_CANDIDATE_WITHIN_LATENCY, BLOCKED]
+    title: Provider unavailable
+    detail: >-
+      run status BLOCKED means the provider is not enabled or needs your own key - not billed;
+      capacity-locked providers answer 503 with Retry-After
+  - status: 504
+    codes: [RELAY_TIMEOUT]
+    title: Relay timeout
+run_statuses:   # terminal states on the run record, distinct from HTTP codes
+  - {status: COMPLETED, billed: true, note: providerResponse.httpStatus 404 means no data, not a failure}
+  - {status: FAILED, billed: false}
+  - {status: TIMED_OUT, billed: false}
+  - {status: BLOCKED, billed: false}
+  - {status: STOPPED, billed: false}

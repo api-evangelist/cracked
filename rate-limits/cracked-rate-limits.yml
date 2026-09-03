@@ -1,0 +1,26 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/docs/api (Rate limits section)
+limit_count: 3
+limits:
+  - scope: per-key
+    limit: 120
+    window: 1 minute
+    applies_to: runs (POST /v1/run); discover and inspect are not rate limited; async runs count once, at start
+    exhaustion_status: 429
+    error_code: RATE_LIMITED
+  - scope: per-provider shared token bucket
+    limit: provider-published upstream limits (CoinGecko 30/min, Nominatim 1/s, Alpha Vantage 5/min, Hunter 15/s, NCBI 3/s)
+    window: per provider
+    behavior: >-
+      bursts are smoothed - each run waits up to 2s for a token instead of failing; an upstream 429
+      with Retry-After <= 5s is retried once; recorded on the run as smoothed {waitedMs, retried,
+      retryAfterS} and in the X-Cracked-Smoothed response header
+  - scope: per-address (agent self-registration)
+    limit: 5
+    window: 1 day
+    applies_to: POST /v1/agents/register
+response_headers: [Retry-After, X-Cracked-Smoothed, X-Cracked-Replayed, X-Cracked-Cost-Micros]
+notes: >-
+  429 on key exhaustion; capacity-locked providers answer 503 with Retry-After (observed example
+  in the docs shows Retry-After: 2712). Key-level monthly_limit_usd caps spend rather than rate.

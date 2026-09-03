@@ -1,0 +1,17 @@
+generated: '2026-09-03'
+method: derived
+source: openapi/cracked-openapi.json components.schemas
+entities: [Price, Metrics, Endpoint, Run, Error, Batch, Schedule]
+relationships:
+  - {from: Endpoint, to: Price, type: has_one, via: price}
+  - {from: Endpoint, to: Metrics, type: has_one, via: metrics}
+  - {from: Run, to: Endpoint, type: belongs_to, via: provider + endpoint}
+  - {from: Batch, to: Run, type: has_many, via: items (each batch item becomes a run)}
+  - {from: Schedule, to: Run, type: has_many, via: cron executions}
+id_conventions:
+  run_id: returned as runId on every execution; permalink at run.url
+  api_key_prefix: ck_live_
+notes: >-
+  Small deliberate schema surface - the catalog itself (providers, tools, capabilities) is served
+  dynamically via /v1/providers, /v1/capabilities and /v1/leaderboards rather than modeled in
+  components.schemas.

@@ -1,0 +1,18 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/SKILL.md + https://cracked.ai/.well-known/skills/index.json
+skills:
+  - file: cracked-skill.md
+    name: cracked
+    version: 0.7.0
+    api: openapi/cracked-openapi.json
+    source: https://cracked.ai/SKILL.md
+    fetched: '2026-09-03'
+    operations: ["POST /discover", "POST /inspect", "POST /run", "GET /runs/{id}", "POST /runs/{id}/stop", "GET /wallet/balance", "POST /agents/register", "GET /v1/refunds"]
+    note: provider-published Agent Skill, saved verbatim (spec declares no operationIds; operations listed as method+path)
+  - file: cracked-skills-index.json
+    name: Cracked agent skills index
+    version: 0.8.0
+    source: https://cracked.ai/.well-known/skills/index.json
+    fetched: '2026-09-03'
+    note: provider-published index of 162 smart-run capabilities in 16 groups, saved verbatim

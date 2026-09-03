@@ -1,0 +1,14 @@
+generated: '2026-09-03'
+method: searched
+probe: true
+source: https://cracked.ai/trust
+url: https://cracked.ai/trust
+certifications: []
+evidence:
+- source: https://cracked.ai/trust
+  keywords:
+  - soc 2
+  - trust center
+note: 'The trust center states plainly that SOC 2 is NOT certified: "SOC 2: not certified. Controls are documented on these
+  pages; a SOC 2 Type I engagement is in preparation and the audit has not started." Sub-pages: /trust/security-practices,
+  /trust/data-retention, /trust/incidents. No Compliance pointer is emitted because no certification is published.'

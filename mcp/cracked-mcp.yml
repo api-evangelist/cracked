@@ -1,0 +1,58 @@
+generated: '2026-09-03'
+method: searched
+status: published
+source: https://cracked.ai/.well-known/mcp.json
+deployment:
+  mode: remote
+  endpoint: https://cracked.ai/mcp
+  auth: oauth        # OAuth 2.1 + PKCE with dynamic client registration, or bearer ck_live_ API key
+  verified: probed   # POST tools/list answered: /mcp 401 invalid_token (gated), /mcp/public 200 with 4 tools
+server:
+  name: cracked
+  transport: streamable-http
+  url: https://cracked.ai/mcp
+  version: 0.8.0
+  manifest: well-known/cracked-mcp.json
+  oauth:
+    protected_resource_metadata: https://cracked.ai/.well-known/oauth-protected-resource/mcp
+    authorization_server_metadata: https://cracked.ai/.well-known/oauth-authorization-server
+    scopes: [tools:discover, tools:run, wallet:read, offline_access]
+    pkce: S256
+    dynamic_client_registration: https://cracked.ai/oauth/register
+public_server:
+  url: https://cracked.ai/mcp/public
+  auth: none
+  verified: probed   # tools/list returned 200 with full inputSchemas on 2026-09-03
+  tools_file: cracked-mcp-public-tools.json
+tool_sets:            # from the provider's own manifest; authenticated introspection is OAuth-gated
+  core: { endpoint: "https://cracked.ai/mcp?tools=core", tools: 7 }
+  top: { endpoint: "https://cracked.ai/mcp?tools=top", tools: 47, default: true }
+  all: { endpoint: "https://cracked.ai/mcp?tools=all", tools: 169 }
+tools:
+  # /mcp/public — probed live, schemas saved verbatim in cracked-mcp-public-tools.json
+  - name: discover_tools
+    description: Search 67,000+ tools and data endpoints in natural language. Free, no account.
+  - name: inspect_tool
+    description: Input schema, price, health and docs for one endpoint. Free.
+  - name: register_agent
+    description: Create a Cracked workspace for this agent; returns an API key with $1 trial credit.
+  - name: bounty_program
+    description: How to earn credit.
+  # /mcp authenticated generic tools — from the published manifest (live tools/list is OAuth-gated)
+  - name: run_tool
+    description: Execute a provider endpoint (maps to POST /v1/run with provider+endpoint).
+  - name: get_run
+    description: Poll a run (maps to GET /v1/runs/{id}).
+  - name: run_capability
+    description: Smart run by capability id (maps to POST /v1/run with capability).
+  - name: list_capabilities
+    description: List the 162 smart-run capabilities (maps to GET /v1/capabilities).
+  - name: get_balance
+    description: Wallet balance (maps to GET /v1/wallet/balance).
+notes: >-
+  Two hosted servers. /mcp/public (no auth) answered tools/list with 4 tools and full JSON Schema
+  2020-12 inputSchemas. /mcp (authenticated) answered 401 invalid_token to anonymous tools/list, so
+  its live schemas need authenticated introspection; the tool sets above come from the provider's
+  own /.well-known/mcp.json manifest. Up to 162 capability tools can be registered as typed tools
+  via ?tools=all. Listed on Smithery (smithery.ai/servers/systems-ai-lab/cracked) and the MCP
+  Registry (io.github.systemsailab/cracked).

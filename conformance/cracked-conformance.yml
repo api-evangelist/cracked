@@ -1,0 +1,50 @@
+generated: '2026-09-03'
+method: derived
+source: live well-known probes + openapi/cracked-openapi.json + https://cracked.ai/docs
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: RFC 8414 authorization-server metadata served at /.well-known/oauth-authorization-server (probed 200, 2026-09-03); authorization_code + refresh_token, PKCE S256, dynamic client registration
+  - id: rfc8414-authorization-server-metadata
+    conforms: true
+    evidence: well-known/cracked-oauth-authorization-server.json, fetched live
+  - id: rfc9728-protected-resource-metadata
+    conforms: true
+    evidence: /.well-known/oauth-protected-resource served (200); resource https://cracked.ai/mcp with authorization_servers + scopes_supported
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404; the OAuth server is not an OIDC provider
+  - id: mcp
+    conforms: true
+    evidence: streamable-http MCP servers at /mcp (OAuth 2.1, per the MCP authorization spec) and /mcp/public (anonymous); tools/list on /mcp/public answered with JSON Schema 2020-12 inputSchemas
+    domain_standard: true
+    note: >-
+      MCP is the domain standard of the agent-tool market this provider sells into; the contract
+      itself (manifest at /.well-known/mcp.json, RFC 9728 metadata scoped to /mcp, live tools/list)
+      declares it, not just marketing prose.
+  - id: a2a
+    conforms: true
+    evidence: A2A agent card (protocolVersion 0.3.0) served at /.well-known/agent.json, graded near-conformant in a2a/cracked-a2a.yml
+    domain_standard: true
+  - id: json-schema-2020-12
+    conforms: true
+    evidence: MCP tool inputSchemas declare $schema https://json-schema.org/draft/2020-12/schema (probed tools/list)
+  - id: x402
+    conforms: true
+    evidence: 402 responses carry a PAYMENT-REQUIRED header (x402 v2) per the OpenAPI 402 response and https://cracked.ai/docs/x402; terms endpoint GET /v1/x402
+    domain_standard: true
+  - id: llms-txt
+    conforms: true
+    evidence: /llms.txt served (200, saved verbatim); docs pages served as markdown twins at <path>.md
+  - id: idempotency
+    conforms: true
+    evidence: Idempotency-Key header on POST /v1/run and POST /v1/batches, 24h replay window, 409 IDEMPOTENCY_MISMATCH on body mismatch (https://cracked.ai/docs/api)
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: error envelope is a custom {code, error, message} JSON shape, not application/problem+json
+  - id: pagination
+    conforms: true
+    evidence: cursor-based pagination parameters in the OpenAPI list operations
+notes: >-
+  No published compliance certifications - the trust center states SOC 2 is not certified (Type I
+  engagement in preparation), so no Compliance pointer is emitted.

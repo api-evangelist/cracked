@@ -1,0 +1,32 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/pricing
+plan_count: 3
+pricing_model: pay-per-call from one prepaid balance; no subscriptions, no provider signups
+plans:
+  - name: Pay per run
+    price: $0.001 platform fee per run + provider price
+    currency: USD
+    billing_period: per call (prepaid balance)
+    included: >-
+      provider price on Cracked master accounts is the upstream rate + 25%; cached results bill
+      provider price $0 + fee; failed/blocked/stopped/timed-out runs are not billed
+    signup_credit: $2 free credit after email confirmation ($1 for agent self-registration, +$1 on claim)
+  - name: Bring your own key (BYOK)
+    price: $0.001 platform fee per run only
+    currency: USD
+    billing_period: per call
+    included: connect your own provider key (Apify, OpenAI, Apollo, any keyed provider); provider portion $0
+  - name: Enterprise
+    price: contact
+    currency: USD
+    billing_period: monthly invoicing
+    included: SAML SSO, append-only audit logs, managed provider credentials, budgets, dedicated master accounts
+    docs: https://cracked.ai/docs/enterprise
+alternative_payment:
+  x402: pay per call in USDC on Base without an account (https://cracked.ai/docs/x402)
+per_key_controls: monthly_limit_usd on API keys
+notes: >-
+  Prices confirmed across /pricing (probed 200), /docs/how-it-works and llms.txt, which states
+  "every price on the site is the price Cracked charges (provider price plus a $0.001 platform
+  fee)". Per-endpoint prices are published machine-readably per tool via POST /v1/inspect.

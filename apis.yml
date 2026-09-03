@@ -4,6 +4,7 @@ description: >-
   thousands of third-party tools. It exposes 9,521 endpoints from 1,183 providers plus 50,000+ Apify actors, publishing
   measured success rate, median latency and per-call price per tool.
 url: https://raw.githubusercontent.com/api-evangelist/cracked/refs/heads/main/apis.yml
+image: https://cracked.ai/brand/icon.png
 created: '2026-09-03'
 modified: '2026-09-03'
 specificationVersion: '0.21'
@@ -80,6 +81,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://cracked.ai/openapi.json
+      - type: OpenAPI
+        url: openapi/cracked-openapi.json
       - type: Documentation
         url: https://cracked.ai/docs
       - type: Documentation
@@ -100,6 +103,7 @@ apis:
         url: https://cracked.ai/llms-full.txt
 maintainers:
   - FN: Cracked AI LLC
+    email: support@cracked.ai
     url: mailto:support@cracked.ai
   - FN: Cracked API
     url: https://cracked.ai
@@ -110,3 +114,83 @@ generated:
   model: claude-opus-4-8
   confidence: 98
   at: '2026-09-03T03:16:46.735Z'
+common:
+- type: TrustCenter
+  url: security/cracked-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/cracked-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/cracked-domain-security.yml
+- type: Authentication
+  url: authentication/cracked-authentication.yml
+- type: Packages
+  url: packages/cracked-packages.yml
+- type: SDKs
+  url: packages/cracked-packages.yml
+- type: WellKnown
+  url: well-known/cracked-well-known.yml
+- type: MCPServer
+  url: mcp/cracked-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/cracked-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/cracked-a2a.yml
+- type: LLMsTxt
+  url: llms/cracked-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/cracked-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/cracked-conformance.yml
+- type: ErrorCatalog
+  url: errors/cracked-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/cracked-lifecycle.yml
+- type: StatusPage
+  url: https://cracked.ai/status
+- type: OAuthScopes
+  url: scopes/cracked-scopes.yml
+- type: Security
+  url: https://cracked.ai/security
+- type: Sandbox
+  url: sandbox/cracked-sandbox.yml
+- type: Conventions
+  url: conventions/cracked-conventions.yml
+- type: Idempotency
+  url: conventions/cracked-conventions.yml
+- type: ChangeLog
+  url: changelog/cracked-changelog.yml
+- type: ChangeLog
+  url: https://cracked.ai/changelog
+- type: CLI
+  url: cli/cracked-cli.yml
+- type: DataModel
+  url: data-model/cracked-data-model.yml
+- type: Plans
+  url: plans/cracked-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cracked-rate-limits.yml
+- type: Webhooks
+  url: asyncapi/cracked-webhooks.yml
+- type: DeveloperPortal
+  url: https://cracked.ai/docs
+- type: APIReference
+  url: https://cracked.ai/docs/api
+- type: GettingStarted
+  url: https://cracked.ai/docs
+- type: Pricing
+  url: https://cracked.ai/pricing
+- type: SignUp
+  url: https://cracked.ai/login
+- type: TermsOfService
+  url: https://cracked.ai/legal/terms
+- type: PrivacyPolicy
+  url: https://cracked.ai/legal/privacy
+- type: Postman
+  url: https://cracked.ai/postman/cracked.postman_collection.json
+x-enrichment:
+  date: '2026-09-03'
+  status: enriched
+  artifacts_added: 34
+  pass: local-v1

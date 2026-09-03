@@ -1,0 +1,23 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/changelog.rss
+scheme: semver (platform releases, pre-1.0)
+current_version: 0.8.0   # per /.well-known/mcp.json; RSS covers 0.1.0-0.7.0
+feed: https://cracked.ai/changelog.rss
+entries:
+  - version: 0.7.0
+    date: '2026-09-02'
+  - version: 0.6.0
+    date: '2026-09-02'
+  - version: 0.5.0
+    date: '2026-09-02'
+  - version: 0.3.0
+    date: '2026-09-02'
+  - version: 0.2.0
+    date: '2026-09-02'
+  - version: 0.1.0
+    date: '2026-09-01'
+notes: >-
+  A dated changelog page (https://cracked.ai/changelog, 200) with an RSS feed. The entire history
+  is 2026-09-01..02 - the platform launched the day before this profile was made, which is the
+  honest currency signal here.

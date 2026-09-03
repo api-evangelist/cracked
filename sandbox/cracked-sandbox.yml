@@ -1,0 +1,23 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/docs/how-it-works (Playground section) + https://cracked.ai/llms.txt
+model: no-key playground plus trial credit (no separate sandbox environment; test-vs-live is a single live environment with free tiers)
+playground:
+  endpoint: POST /v1/try {"provider","endpoint","input"}
+  allowance: $0.05 of tool credit per address per day, at most 20 tries
+  eligibility: synchronous tools from live providers estimated at $0.02 or less per call; file, messaging and async tools excluded
+  allowance_check: GET /v1/try
+  cli: npx cracked-ai try "weather in austin"
+  ui: every tool page has a Run button that works signed out
+free_endpoints_no_key:
+  - POST /v1/discover
+  - POST /v1/inspect
+  - GET /v1/capabilities
+  - GET /v1/x402
+  - GET /v1/bounties/program
+trial_credit:
+  human_signup: $2 after email confirmation
+  agent_self_registration: $1 via POST /v1/agents/register (5 per address per day); claim by a human adds $1
+key_prefixes:
+  live: ck_live_
+notes: no test-mode key prefix or simulated data is published; the playground bills a shared platform workspace

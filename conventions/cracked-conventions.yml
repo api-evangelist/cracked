@@ -1,0 +1,72 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/docs/api + https://cracked.ai/docs/how-it-works + https://cracked.ai/docs/async
+authentication:
+  style: bearer API key (ck_live_ prefix) on every /v1 call and the MCP server; OAuth 2.1 + PKCE for MCP clients
+  cross_link: authentication/cracked-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  scope: workspace (all API keys of a workspace share the key space; with reseller tags, scoped to workspace+tag+key)
+  retention: 24 hours
+  applies_to: [POST /v1/run, POST /v1/batches]
+  semantics: >-
+    same key + same body within 24h returns the original run record with replayed: true,
+    X-Cracked-Replayed: true and X-Cracked-Cost-Micros: 0 - nothing runs, nothing is charged;
+    same key + different body returns 409 IDEMPOTENCY_MISMATCH (bodies compared as
+    key-order-independent JSON); a streaming retry answers with a queued event and the stored result
+  docs: https://cracked.ai/docs/api
+pagination:
+  style: cursor
+  note: cursor parameters on list endpoints (runs, activities); limit parameter capped per endpoint
+error_envelope:
+  shape: '{code, error, message}' 
+  cross_link: errors/cracked-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers: [Retry-After, X-Cracked-Smoothed]
+  cross_link: rate-limits/cracked-rate-limits.yml
+request_tracing:
+  run_id: every execution returns a runId and a run permalink (run.url) the agent can cite
+versioning:
+  scheme: uri-path (/v1)
+  cross_link: lifecycle/cracked-lifecycle.yml
+caching:
+  result_cache: >-
+    deterministic tools cached 10 minutes; cache hits bill provider price $0 + platform fee only and
+    carry cached: true; opt out with "cache": false or set a TTL with "cache": <seconds>
+async:
+  pattern: wait:false returns 202 + runId; poll GET /v1/runs/{id}?wait=30 (long-poll, max 100s); webhook_url for push
+reversibility:
+  grade: verified   # reversal paths AND stated windows, all from the provider's docs
+  read_only: false
+  operations:
+    - action: stop a running job
+      operation: POST /v1/runs/{id}/stop
+      window: any time while the run is non-terminal (status RUNNING)
+      effect: aborts the upstream job where the provider supports it (Apify does); run marked STOPPED, nothing billed
+      docs: https://cracked.ai/docs/async
+    - action: cancel a batch
+      operation: POST /v1/batches/{id}/cancel
+      window: while the batch is in progress
+      docs: https://cracked.ai/docs/batches
+    - action: refund a bad or empty run
+      operation: POST /v1/runs/{runId}/feedback {"ok":false}
+      window: >-
+        automatic full refund (provider portion + fee) when the run cost at most $1.00, is under
+        24 hours old, and the workspace has refunded fewer than 20% of billed runs over the last
+        30 days; outside those limits queued for review; each run refunded at most once;
+        GET /v1/refunds lists outcomes. Empty 2xx outputs are refunded without asking.
+      docs: https://cracked.ai/docs/how-it-works
+    - action: x402 settlement protection
+      operation: (protocol-level)
+      window: failed runs are never settled
+      docs: https://cracked.ai/docs/x402
+  note: >-
+    billing honesty is a design rule: FAILED, TIMED_OUT, BLOCKED and STOPPED runs are not billed;
+    delete surfaces exist for secrets, schedules, apps and datasets (DELETE operations in the spec)
+dry_run:
+  supported: partial
+  note: >-
+    GET /v1/capabilities/{id}/estimate prices a waterfall result before spending; POST /v1/batches
+    returns a cost preview; no general dry-run flag on POST /v1/run

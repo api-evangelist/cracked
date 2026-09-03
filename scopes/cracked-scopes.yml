@@ -1,0 +1,37 @@
+generated: '2026-09-03'
+method: searched
+source: https://cracked.ai/.well-known/oauth-authorization-server
+docs: https://cracked.ai/docs/mcp
+schemes:
+  - name: OAuth 2.1 with PKCE (MCP)
+    source: well-known/cracked-oauth-authorization-server.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://cracked.ai/oauth/authorize
+        tokenUrl: https://cracked.ai/oauth/token
+        registrationUrl: https://cracked.ai/oauth/register
+        revocationUrl: https://cracked.ai/oauth/revoke
+        pkce: S256
+scopes:
+  - scope: tools:discover
+    description: Discover and inspect tools in the catalog
+    flows: [authorizationCode]
+    sources: [well-known/cracked-oauth-authorization-server.json, well-known/cracked-oauth-protected-resource.json]
+  - scope: tools:run
+    description: Execute tool runs (billed per call)
+    flows: [authorizationCode]
+    sources: [well-known/cracked-oauth-authorization-server.json, well-known/cracked-oauth-protected-resource.json]
+  - scope: wallet:read
+    description: Read wallet balance and activity
+    flows: [authorizationCode]
+    sources: [well-known/cracked-oauth-authorization-server.json, well-known/cracked-oauth-protected-resource.json]
+  - scope: offline_access
+    description: Refresh-token access for long-lived MCP sessions
+    flows: [authorizationCode]
+    sources: [well-known/cracked-oauth-authorization-server.json]
+notes: >-
+  The OpenAPI declares only a bearer http scheme (ck_live_ API keys), so nothing was derivable from
+  the spec; these scopes come from the provider's live RFC 8414 authorization-server metadata and
+  RFC 9728 protected-resource metadata, both fetched 2026-09-03. OAuth is used by MCP clients;
+  plain /v1 calls use the bearer key. Scope descriptions are ours, inferred from the scope names
+  and the MCP docs.

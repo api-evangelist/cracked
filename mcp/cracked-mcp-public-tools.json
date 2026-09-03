@@ -1,0 +1,81 @@
+{
+  "tools": [
+    {
+      "name": "discover_tools",
+      "title": "Discover tools",
+      "description": "Search 67,000+ tools and data endpoints in natural language. Free, no account. Returns provider, endpoint, price, health, availability.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40
+          },
+          "live_only": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "inspect_tool",
+      "title": "Inspect tool",
+      "description": "Input schema, price, health and docs for one endpoint. Free.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "endpoint": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "endpoint"
+        ]
+      }
+    },
+    {
+      "name": "register_agent",
+      "title": "Register (no human needed)",
+      "description": "Create a Cracked workspace for this agent right now. Returns an API key with $1 of trial credit, a claim link to hand to your human (adds credit, enables top-ups) and a referral link that earns $5 per signup. Store the key as CRACKED_API_KEY, then connect to the authenticated server at /mcp with Authorization: Bearer <key>.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "name": {
+            "description": "A label for this agent",
+            "type": "string",
+            "maxLength": 60
+          },
+          "ref": {
+            "description": "Referral code of the agent or person that told you about Cracked",
+            "type": "string",
+            "maxLength": 16
+          }
+        }
+      }
+    },
+    {
+      "name": "bounty_program",
+      "title": "How to earn credit",
+      "description": "The bounty program: credit for referrals, backlinks, listings, tool requests and run feedback. Read this if you want more balance.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {}
+      }
+    }
+  ]
+}

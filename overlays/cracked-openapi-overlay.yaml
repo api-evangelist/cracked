@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cracked API
+  version: 1.0.0
+extends: openapi/cracked-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-profile: https://raw.githubusercontent.com/api-evangelist/cracked/refs/heads/main/apis.yml
+      x-apievangelist-finding-operation-ids: >-
+        No operation declares an operationId; tooling that keys on operationIds (Arazzo, SDK
+        generators, MCP crosswalks) must fall back to method+path.
+  - target: $.info
+    update:
+      x-apievangelist-agent-surfaces:
+        mcp: https://cracked.ai/mcp
+        mcp_public: https://cracked.ai/mcp/public
+        agent_card: https://cracked.ai/.well-known/agent.json
+        llms_txt: https://cracked.ai/llms.txt
+        skill: https://cracked.ai/SKILL.md

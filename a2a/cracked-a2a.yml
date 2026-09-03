@@ -1,0 +1,31 @@
+generated: '2026-09-03'
+method: probed
+source: https://cracked.ai/.well-known/agent.json
+discovery:
+  path: /.well-known/agent.json
+  canonical: false   # canonical /.well-known/agent-card.json answers 308 and redirects here
+  host: cracked.ai
+conformance:
+  spec: A2A 1.0.0
+  grade: near-conformant
+  protocol_version: 0.3.0
+  preferred_transport: null
+  deviations:
+    - no-preferredTransport
+card:
+  name: Cracked
+  url: https://cracked.ai/mcp
+  version: 0.8.0
+  skills: 20
+  file: cracked-agent-card.json
+x-evidence:
+  fetched: '2026-09-03'
+  url: https://cracked.ai/.well-known/agent.json
+  http_status: 200
+  content_type: application/json
+notes: >-
+  capabilities is an object (streaming true), protocolVersion 0.3.0 present, skills is an array of
+  20 entries with ids/names — passes every hard check; graded near-conformant only for the missing
+  optional preferredTransport. defaultInputModes/defaultOutputModes are present. The card's url
+  points at the MCP endpoint (https://cracked.ai/mcp), with securitySchemes for bearer ck_live_
+  keys and OAuth 2.1 (metadata at /.well-known/oauth-authorization-server).
