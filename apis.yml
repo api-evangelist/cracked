@@ -9,6 +9,28 @@ created: '2026-09-03'
 modified: '2026-09-03'
 specificationVersion: '0.21'
 tags:
+  - AI Agents
+  - Agent Tools
+  - MCP
+  - Tool Router
+  - API Aggregator
+  - Web Search
+  - Web Scraping
+  - Data Enrichment
+  - llms-txt
+  - Agent Skills
+  - pay-per-call
+  - Aggregator
+  - Lead Generation
+  - AI Models
+  - Developer Tools
+  - lead gen
+  - SEO
+  - social-media-data
+  - E-Commerce
+  - Finance
+  - Weather
+tags_raw:
   - ai agents
   - agent tools
   - mcp
@@ -48,6 +70,28 @@ apis:
     humanURL: https://cracked.ai/docs/api
     baseURL: https://cracked.ai/v1
     tags:
+      - AI Agents
+      - Agent Tools
+      - MCP
+      - Tool Router
+      - API Aggregator
+      - Web Search
+      - Web Scraping
+      - Data Enrichment
+      - llms-txt
+      - Agent Skills
+      - pay-per-call
+      - Aggregator
+      - Lead Generation
+      - AI Models
+      - Developer Tools
+      - lead gen
+      - SEO
+      - social-media-data
+      - E-Commerce
+      - Finance
+      - Weather
+    tags_raw:
       - ai agents
       - agent tools
       - mcp
@@ -191,6 +235,8 @@ common:
   url: https://cracked.ai/legal/privacy
 - type: Postman
   url: https://cracked.ai/postman/cracked.postman_collection.json
+- type: Support
+  url: mailto:support@cracked.ai
 x-enrichment:
   date: '2026-09-03'
   status: enriched
