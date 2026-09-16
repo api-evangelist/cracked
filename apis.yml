@@ -62,89 +62,358 @@ tags_raw:
   - weather
   - AI models
 apis:
-  - name: Cracked API
-    description: >-
-      REST/HTTP API to discover, inspect, run and poll third-party agent tools, with smart-run capabilities,
-      leaderboards, wallet balance and agent self-registration. Exposes OpenAPI 3.1, two hosted MCP servers
-      (authenticated and no-auth), an llms.txt, and a published agent skill plus A2A agent card.
-    humanURL: https://cracked.ai/docs/api
-    baseURL: https://cracked.ai/v1
-    tags:
-      - AI Agents
-      - Agent Tools
-      - MCP
-      - Tool Router
-      - API Aggregator
-      - Web Search
-      - Web Scraping
-      - Data Enrichment
-      - llms-txt
-      - Agent Skills
-      - pay-per-call
-      - Aggregator
-      - Lead Generation
-      - AI Models
-      - Developer Tools
-      - lead gen
-      - SEO
-      - social-media-data
-      - E-Commerce
-      - Finance
-      - Weather
-    tags_raw:
-      - ai agents
-      - agent tools
-      - mcp
-      - tool router
-      - API aggregator
-      - web search
-      - web scraping
-      - data enrichment
-      - llms.txt
-      - agent skills
-      - pay-per-call
-      - ai-agents
-      - agent-tools
-      - tool-router
-      - aggregator
-      - web-search
-      - web-scraping
-      - data-enrichment
-      - lead-generation
-      - ai-models
-      - developer-tools
-      - AI agents
-      - MCP
-      - lead gen
-      - SEO
-      - social media data
-      - ecommerce
-      - finance
-      - weather
-      - AI models
-    properties:
-      - type: OpenAPI
-        url: https://cracked.ai/openapi.json
-      - type: OpenAPI
-        url: openapi/cracked-openapi.json
-      - type: Documentation
-        url: https://cracked.ai/docs
-      - type: Documentation
-        url: https://cracked.ai/docs/api
-      - type: MCPServer
-        url: https://cracked.ai/mcp
-      - type: LLMsTxt
-        url: https://cracked.ai/llms.txt
-      - type: AgentSkill
-        url: https://cracked.ai/SKILL.md
-      - type: Documentation
-        url: https://cracked.ai/docs/mcp
-      - type: Documentation
-        url: https://cracked.ai/docs/skill
-      - type: MCPServer
-        url: https://cracked.ai/mcp/public
-      - type: LLMsTxt
-        url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-apps-api
+  name: Cracked API Apps API
+  description: The Apps API from Cracked API — 6 operation(s) for apps.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-apps-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-auth-api
+  name: Cracked API Auth API
+  description: The Auth API from Cracked API — 1 operation(s) for auth.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-auth-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-batches-api
+  name: Cracked API Batches API
+  description: The Batches API from Cracked API — 4 operation(s) for batches.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-batches-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-datasets-api
+  name: Cracked API Datasets API
+  description: The Datasets API from Cracked API — 2 operation(s) for datasets.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-datasets-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-discover-api
+  name: Cracked API Discover API
+  description: The Discover API from Cracked API — 1 operation(s) for discover.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Discover
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-discover-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-inspect-api
+  name: Cracked API Inspect API
+  description: The Inspect API from Cracked API — 1 operation(s) for inspect.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Inspect
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-inspect-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-providers-api
+  name: Cracked API Providers API
+  description: The Providers API from Cracked API — 1 operation(s) for providers.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-providers-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-referrals-api
+  name: Cracked API Referrals API
+  description: The Referrals API from Cracked API — 1 operation(s) for referrals.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Referrals
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-referrals-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-refunds-api
+  name: Cracked API Refunds API
+  description: The Refunds API from Cracked API — 1 operation(s) for refunds.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-relay-api
+  name: Cracked API Relay API
+  description: The Relay API from Cracked API — 4 operation(s) for relay.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Relay
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-relay-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-run-api
+  name: Cracked API Run API
+  description: The Run API from Cracked API — 1 operation(s) for run.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Run
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-run-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-runs-api
+  name: Cracked API Runs API
+  description: The Runs API from Cracked API — 3 operation(s) for runs.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Runs
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-runs-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-schedules-api
+  name: Cracked API Schedules API
+  description: The Schedules API from Cracked API — 2 operation(s) for schedules.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-secrets-api
+  name: Cracked API Secrets API
+  description: The Secrets API from Cracked API — 3 operation(s) for secrets.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-wallet-api
+  name: Cracked API Wallet API
+  description: The Wallet API from Cracked API — 2 operation(s) for wallet.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - Wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-wallet-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
+- aid: cracked:cracked-x402-api
+  name: Cracked API X402 API
+  description: The X402 API from Cracked API — 1 operation(s) for x402.
+  humanURL: https://cracked.ai/docs/api
+  baseURL: https://cracked.ai/v1
+  tags:
+  - X402
+  properties:
+  - type: OpenAPI
+    url: openapi/cracked-x402-api-openapi.yml
+  - type: Documentation
+    url: https://cracked.ai/docs
+  - type: Documentation
+    url: https://cracked.ai/docs/api
+  - type: LLMsTxt
+    url: https://cracked.ai/llms.txt
+  - type: Documentation
+    url: https://cracked.ai/docs/mcp
+  - type: Documentation
+    url: https://cracked.ai/docs/skill
+  - type: LLMsTxt
+    url: https://cracked.ai/llms-full.txt
 maintainers:
   - FN: Cracked AI LLC
     email: support@cracked.ai
@@ -159,6 +428,12 @@ generated:
   confidence: 98
   at: '2026-09-03T03:16:46.735Z'
 common:
+- type: MCPServer
+  url: https://cracked.ai/mcp
+- type: AgentSkill
+  url: https://cracked.ai/SKILL.md
+- type: MCPServer
+  url: https://cracked.ai/mcp/public
 - type: Website
   url: https://www.cracked.ai/
 - type: TrustCenter
