@@ -68,6 +68,8 @@ apis:
   humanURL: https://cracked.ai/docs/api
   baseURL: https://cracked.ai/v1
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -90,6 +92,8 @@ apis:
   humanURL: https://cracked.ai/docs/api
   baseURL: https://cracked.ai/v1
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -332,6 +336,8 @@ apis:
   humanURL: https://cracked.ai/docs/api
   baseURL: https://cracked.ai/v1
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
@@ -376,6 +382,8 @@ apis:
   humanURL: https://cracked.ai/docs/api
   baseURL: https://cracked.ai/v1
   tags:
+  - Wallets
+  tags_raw:
   - Wallet
   properties:
   - type: OpenAPI
@@ -398,6 +406,8 @@ apis:
   humanURL: https://cracked.ai/docs/api
   baseURL: https://cracked.ai/v1
   tags:
+  - x402
+  tags_raw:
   - X402
   properties:
   - type: OpenAPI
