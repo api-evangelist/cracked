@@ -1,0 +1,152 @@
+openapi: 3.2.0
+info:
+  title: Cracked Relay API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Relay
+paths:
+  /relay:
+    post:
+      summary: 'Relay: perform an HTTPS call server-side with {{secret:NAME}} substituted from…'
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                method:
+                  type: string
+                  enum:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - HEAD
+                  - OPTIONS
+                  default: GET
+                url:
+                  type: string
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+                body:
+                  description: string as-is, object or array as JSON
+                bodyEncoding:
+                  type: string
+                  enum:
+                  - text
+                  - base64
+                secretRefs:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: extra headers with {{secret:NAME}} templates
+                timeoutMs:
+                  type: integer
+                  minimum: 1000
+                  maximum: 60000
+                tag:
+                  type: string
+      responses:
+        '200':
+          description: Upstream status, headers (no set-cookie), body (text or base64), json when JSON, bytes, elapsedMs, redirects, url {host,path}, secretsUsed, runId, billing
+        '400':
+          description: RELAY_BAD_REQUEST or RELAY_REFUSED (private/local host)
+        '404':
+          description: RELAY_SECRET_NOT_FOUND
+        '429':
+          description: RELAY_RATE_LIMITED
+        '502':
+          description: RELAY_DNS, RELAY_CONNECT, RELAY_TOO_LARGE, RELAY_TOO_MANY_REDIRECTS
+        '504':
+          description: RELAY_TIMEOUT
+      tags:
+      - Relay
+      operationId: postRelay
+      x-operation-id-source: derived
+  /relay/{url}:
+    get:
+      summary: 'Relay shorthand: any method on /v1/relay/https://host/path; caller headers…'
+      security:
+      - bearer: []
+      parameters:
+      - name: url
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Same body as POST /relay
+      tags:
+      - Relay
+      operationId: getRelayByUrl
+      x-operation-id-source: derived
+  /relay/env:
+    post:
+      summary: Mint a 10-minute single-use token naming vault secrets, for cracked env run…
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - names
+              properties:
+                names:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 100
+      responses:
+        '200':
+          description: token, expiresAt, names
+        '429':
+          description: ENV_TOKEN_RATE_LIMITED
+      tags:
+      - Relay
+      operationId: postRelayEnv
+      x-operation-id-source: derived
+  /relay/env/exchange:
+    post:
+      summary: Exchange an env token once for its values (same workspace key required; audited)
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - token
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: names, values, expiresAt
+        '410':
+          description: ENV_TOKEN_USED or ENV_TOKEN_EXPIRED
+      tags:
+      - Relay
+      operationId: postRelayEnvExchange
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

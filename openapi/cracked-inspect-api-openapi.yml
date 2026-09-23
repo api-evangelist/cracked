@@ -1,0 +1,57 @@
+openapi: 3.2.0
+info:
+  title: Cracked Inspect API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Inspect
+paths:
+  /inspect:
+    post:
+      summary: Schema, price, health and docs for one endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - provider
+              - endpoint
+              properties:
+                provider:
+                  type: string
+                endpoint:
+                  type: string
+      responses:
+        '200':
+          description: Endpoint details including input JSON Schema
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Inspect
+      operationId: postInspect
+      x-operation-id-source: derived
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

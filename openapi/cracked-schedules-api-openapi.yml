@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  title: Cracked Schedules API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Schedules
+paths:
+  /schedules:
+    post:
+      summary: 'Create a scheduled run (5-field cron in UTC, or every: 5m/1h/1d).'
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                cron:
+                  type: string
+                  example: 0 9 * * *
+                every:
+                  type: string
+                  example: 1h
+                provider:
+                  type: string
+                endpoint:
+                  type: string
+                capability:
+                  type: string
+                input:
+                  type: object
+                webhook_url:
+                  type: string
+                  format: uri
+                dataset:
+                  type: string
+                  enum:
+                  - append
+                  - replace
+                  default: append
+      responses:
+        '201':
+          description: Schedule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+      tags:
+      - Schedules
+      operationId: postSchedules
+      x-operation-id-source: derived
+    get:
+      summary: Schedules
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Schedules
+      tags:
+      - Schedules
+      operationId: getSchedules
+      x-operation-id-source: derived
+  /schedules/{id}:
+    get:
+      summary: Get a schedule
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Schedule
+      tags:
+      - Schedules
+      operationId: getSchedulesById
+      x-operation-id-source: derived
+    patch:
+      summary: Update a schedule (enabled pauses/resumes; cron, every, input, webhook_url…
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cron:
+                  type: string
+                  nullable: true
+                every:
+                  type: string
+                  nullable: true
+                input:
+                  type: object
+                webhook_url:
+                  type: string
+                  nullable: true
+                dataset:
+                  type: string
+                  enum:
+                  - append
+                  - replace
+                enabled:
+                  type: boolean
+      responses:
+        '200':
+          description: Schedule
+      tags:
+      - Schedules
+      operationId: patchSchedulesById
+      x-operation-id-source: derived
+    delete:
+      summary: Delete a schedule (dataset kept unless ?dataset=delete)
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dataset
+        in: query
+        schema:
+          type: string
+          enum:
+          - delete
+      responses:
+        '200':
+          description: Deleted
+      tags:
+      - Schedules
+      operationId: deleteSchedulesById
+      x-operation-id-source: derived
+components:
+  schemas:
+    Schedule:
+      type: object
+      properties:
+        scheduleId:
+          type: string
+        name:
+          type: string
+        cron:
+          type: string
+          nullable: true
+        every:
+          type: string
+          nullable: true
+        timezone:
+          type: string
+        tool:
+          type: string
+        input:
+          type: object
+        dataset:
+          type: string
+          enum:
+          - append
+          - replace
+        datasetId:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+        disabledReason:
+          type: string
+          nullable: true
+        nextRunAt:
+          type: string
+          nullable: true
+        lastRunAt:
+          type: string
+          nullable: true
+        lastStatus:
+          type: string
+          nullable: true
+        lastError:
+          type: string
+          nullable: true
+        consecutiveFailures:
+          type: integer
+        fireCount:
+          type: integer
+        misfires:
+          type: integer
+        hints:
+          type: object
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

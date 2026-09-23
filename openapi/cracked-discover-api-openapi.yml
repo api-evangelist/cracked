@@ -1,0 +1,160 @@
+openapi: 3.2.0
+info:
+  title: Cracked Discover API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Discover
+paths:
+  /discover:
+    post:
+      summary: Search tools in natural language
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                limit:
+                  type: integer
+                  maximum: 40
+                minScore:
+                  type: number
+                liveOnly:
+                  type: boolean
+                includeUnavailable:
+                  type: boolean
+                category:
+                  type: string
+                provider:
+                  type: string
+      responses:
+        '200':
+          description: Ranked endpoints
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query:
+                    type: string
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Endpoint'
+      tags:
+      - Discover
+      operationId: postDiscover
+      x-operation-id-source: derived
+components:
+  schemas:
+    Endpoint:
+      type: object
+      properties:
+        provider:
+          type: string
+        providerName:
+          type: string
+        endpoint:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        price:
+          $ref: '#/components/schemas/Price'
+        status:
+          type: string
+          enum:
+          - live
+          - needs_key
+          - byok_only
+        verified:
+          type: boolean
+        async:
+          type: boolean
+        metrics:
+          $ref: '#/components/schemas/Metrics'
+        score:
+          type: number
+    Price:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - PER_CALL
+          - PER_RESULT
+          - PER_UNIT
+          - PER_SUCCESS
+          description: 'PER_SUCCESS: billed only when the capability''s miss predicate is false (misses are free)'
+        amount:
+          type: number
+        flatFee:
+          type: number
+        unit:
+          type: string
+        provenance:
+          type: object
+          description: Where the price came from
+          properties:
+            source:
+              type: string
+              enum:
+              - pricing_page
+              - api_docs
+              - observed
+              - estimate
+            sourceUrl:
+              type: string
+            checked:
+              type: string
+              format: date
+            confidence:
+              type: string
+              enum:
+              - confirmed
+              - list
+              - estimate
+            note:
+              type: string
+    Metrics:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - healthy
+          - stable
+          - degraded
+          - outage
+          - unknown
+        samples:
+          type: integer
+        successRate:
+          type: number
+          nullable: true
+        medianMs:
+          type: integer
+          nullable: true
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

@@ -1,0 +1,42 @@
+openapi: 3.2.0
+info:
+  title: Cracked Wallet API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Wallet
+paths:
+  /wallet/balance:
+    get:
+      summary: Balance
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Balance in USD
+      tags:
+      - Wallet
+      operationId: getWalletBalance
+      x-operation-id-source: derived
+  /wallet/activities:
+    get:
+      summary: Ledger
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Ledger rows
+      tags:
+      - Wallet
+      operationId: getWalletActivities
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

@@ -1,0 +1,194 @@
+openapi: 3.2.0
+info:
+  title: Cracked Run API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Run
+paths:
+  /run:
+    post:
+      summary: Execute an endpoint
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - provider
+              - endpoint
+              properties:
+                provider:
+                  type: string
+                endpoint:
+                  type: string
+                input:
+                  type: object
+                wait:
+                  type: boolean
+                  default: true
+                webhook_url:
+                  type: string
+                  format: uri
+                stream:
+                  type: boolean
+                  default: false
+                  description: Answer with text/event-stream events queued, routed, progress, fallback, result, error (see /docs/streaming)
+                maxLatencyMs:
+                  type: integer
+                  description: 'Smart runs only: skip candidates whose measured 7-day p95 exceeds this many ms'
+                max_cost_usd:
+                  type: number
+                  description: 'Waterfall capabilities only: total budget for the run in USD, provider prices plus fees, verification included (default 1.00). 402 MAX_COST_EXCEEDED when no candidate fits.'
+                prefer:
+                  type: array
+                  items:
+                    type: string
+                  description: 'Waterfall: provider ids to try first, in order'
+                exclude:
+                  type: array
+                  items:
+                    type: string
+                  description: 'Waterfall: provider ids never to try'
+                verify:
+                  type: boolean
+                  description: 'email-find: run email-verify on the found address inside the same budget'
+                waterfall:
+                  type: boolean
+                  default: true
+                  description: false = stop at the first answer even when it is a miss
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          type: string
+          maxLength: 255
+        description: 'Same key + same body from the same workspace within 24 h returns the original run with replayed: true and charges nothing; a different body is 409 IDEMPOTENCY_MISMATCH'
+      responses:
+        '200':
+          description: Finished run (text/event-stream when stream is true). Headers X-Cracked-Run-Id and X-Cracked-Cost-Micros on every run response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '202':
+          description: Async run started
+        '402':
+          description: Insufficient balance or no key (carries a PAYMENT-REQUIRED header, x402 v2; retry with PAYMENT-SIGNATURE to pay per call in USDC), or MAX_COST_EXCEEDED on a waterfall run whose max_cost_usd fits no candidate (the body names the cheapest option).
+        '409':
+          description: 'PAYMENT_REPLAY: that x402 payment was already used; IDEMPOTENCY_MISMATCH: Idempotency-Key reused with a different body'
+        '429':
+          description: Rate limited
+        '503':
+          description: Provider not enabled (run BLOCKED, not billed)
+      tags:
+      - Run
+      operationId: postRun
+      x-operation-id-source: derived
+components:
+  schemas:
+    Run:
+      type: object
+      properties:
+        runId:
+          type: string
+        provider:
+          type: string
+        endpoint:
+          type: string
+        status:
+          type: string
+          enum:
+          - RUNNING
+          - COMPLETED
+          - FAILED
+          - BLOCKED
+          - STOPPED
+          - TIMED_OUT
+        output: {}
+        providerResponse:
+          type: object
+          properties:
+            httpStatus:
+              type: integer
+              nullable: true
+            error:
+              type: string
+              nullable: true
+        price:
+          $ref: '#/components/schemas/Price'
+        billing:
+          type: object
+          properties:
+            units:
+              type: integer
+            providerUsd:
+              type: number
+            platformFeeUsd:
+              type: number
+            totalUsd:
+              type: number
+            byok:
+              type: boolean
+            balanceAfterUsd:
+              type: number
+        hints:
+          type: object
+        createdAt:
+          type: string
+        completedAt:
+          type: string
+          nullable: true
+    Price:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - PER_CALL
+          - PER_RESULT
+          - PER_UNIT
+          - PER_SUCCESS
+          description: 'PER_SUCCESS: billed only when the capability''s miss predicate is false (misses are free)'
+        amount:
+          type: number
+        flatFee:
+          type: number
+        unit:
+          type: string
+        provenance:
+          type: object
+          description: Where the price came from
+          properties:
+            source:
+              type: string
+              enum:
+              - pricing_page
+              - api_docs
+              - observed
+              - estimate
+            sourceUrl:
+              type: string
+            checked:
+              type: string
+              format: date
+            confidence:
+              type: string
+              enum:
+              - confirmed
+              - list
+              - estimate
+            note:
+              type: string
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

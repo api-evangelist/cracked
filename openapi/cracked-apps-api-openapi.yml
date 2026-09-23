@@ -1,0 +1,261 @@
+openapi: 3.2.0
+info:
+  title: Cracked Apps API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Apps
+paths:
+  /apps:
+    get:
+      summary: 'Cracked Apps: public listing sorted by runs in the last 7 days (?q= filters…'
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - weekly
+          - installs
+          - new
+          - name
+      responses:
+        '200':
+          description: Apps
+      tags:
+      - Apps
+      operationId: getApps
+      x-operation-id-source: derived
+    post:
+      summary: Publish or update an app from its JSON definition (slug, name, description…
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - slug
+              - name
+              - description
+              - steps
+              properties:
+                slug:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                version:
+                  type: string
+                inputs:
+                  type: object
+                steps:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      capability:
+                        type: string
+                      tool:
+                        type: string
+                      input:
+                        type: object
+                      forEach:
+                        type: string
+                      maxCostUsd:
+                        type: number
+                      continueOnError:
+                        type: boolean
+                output: {}
+                maxCostUsd:
+                  type: number
+                sample:
+                  type: object
+                visibility:
+                  type: string
+                  enum:
+                  - public
+                  - unlisted
+                  - private
+                price_type:
+                  type: string
+                  enum:
+                  - free
+                  - per_run
+                price_usd:
+                  type: number
+                preview:
+                  type: boolean
+                preview_input:
+                  type: object
+      responses:
+        '200':
+          description: Updated or preview
+        '201':
+          description: Created
+        '400':
+          description: INVALID_APP
+        '409':
+          description: APP_SLUG_TAKEN
+      tags:
+      - Apps
+      operationId: postApps
+      x-operation-id-source: derived
+  /apps/{slug}:
+    get:
+      summary: One app with its definition, price breakdown and public receipt
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App
+        '404':
+          description: APP_NOT_FOUND
+      tags:
+      - Apps
+      operationId: getAppsBySlug
+      x-operation-id-source: derived
+    delete:
+      summary: Delete an app (owner only)
+      security:
+      - bearer: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deleted
+      tags:
+      - Apps
+      operationId: deleteAppsBySlug
+      x-operation-id-source: derived
+  /apps/{slug}/run:
+    post:
+      summary: 'Run an app: every step is a billed run (source app:); paid apps add the app…'
+      security:
+      - bearer: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: object
+                tag:
+                  type: string
+      responses:
+        '200':
+          description: Result with receipt
+        '402':
+          description: INSUFFICIENT_FUNDS
+        '404':
+          description: APP_NOT_FOUND
+      tags:
+      - Apps
+      operationId: postAppsBySlugRun
+      x-operation-id-source: derived
+  /apps/{slug}/install:
+    post:
+      summary: 'Install: the app shows on /app/apps and as the MCP tool app_'
+      security:
+      - bearer: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Installed
+      tags:
+      - Apps
+      operationId: postAppsBySlugInstall
+      x-operation-id-source: derived
+    delete:
+      summary: Uninstall
+      security:
+      - bearer: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Removed
+      tags:
+      - Apps
+      operationId: deleteAppsBySlugInstall
+      x-operation-id-source: derived
+  /apps/{slug}/receipt:
+    post:
+      summary: 'Owner only: publish one app run''s receipt on the app page ({appRunId} or null…'
+      security:
+      - bearer: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App
+      tags:
+      - Apps
+      operationId: postAppsBySlugReceipt
+      x-operation-id-source: derived
+  /apps/runs/{id}:
+    get:
+      summary: 'One app run of this workspace: input, output, receipt'
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App run
+        '404':
+          description: APP_RUN_NOT_FOUND
+      tags:
+      - Apps
+      operationId: getAppsRunsById
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token

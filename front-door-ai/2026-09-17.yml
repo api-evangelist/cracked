@@ -1,0 +1,34 @@
+# Front Door AI Index — cracked — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: cracked
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.cracked.ai
+  final_host: cracked.ai
+  ownership: own
+  owner: cracked
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 66
+  host_score: 66
+  density: 32.45
+  words: 2034
+  tiers:
+    agentic: 17
+    core: 18
+    model: 31
+  ambiguous: 35
+  top_terms:
+    agent: 26
+    Claude: 17
+    MCP: 14
+    GPT: 11
+    LLMs: 11
+    smart: 9
+    AI: 7
+    AI agent: 3
+    OpenAI: 2
+    ChatGPT: 1

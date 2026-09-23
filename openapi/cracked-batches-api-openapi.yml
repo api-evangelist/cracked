@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  title: Cracked Batches API
+  version: 0.3.0
+  description: Discover, inspect and run 67,000+ agent tools from one balance. Agents can register their own workspace at POST https://cracked.ai/v1/agents/register ($1 trial credit, no human needed) and earn $5 of credit for every workspace that signs up through their referral link (GET https://cracked.ai/v1/referrals).
+  contact:
+    email: support@cracked.ai
+servers:
+- url: https://cracked.ai/v1
+tags:
+- name: Batches
+paths:
+  /batches:
+    post:
+      summary: 'Create a batch: one tool over up to 5,000 inputs, with a cost preview and…'
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - inputs
+              properties:
+                provider:
+                  type: string
+                endpoint:
+                  type: string
+                capability:
+                  type: string
+                inputs:
+                  type: array
+                  maxItems: 5000
+                  items:
+                    type: object
+                concurrency:
+                  type: integer
+                  minimum: 1
+                  maximum: 8
+                  default: 2
+                cache:
+                  type: boolean
+                webhook_url:
+                  type: string
+                  format: uri
+                name:
+                  type: string
+                dry_run:
+                  type: boolean
+      responses:
+        '200':
+          description: Cost preview (dry_run)
+        '202':
+          description: Batch queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+        '402':
+          description: Balance does not cover the estimate
+      tags:
+      - Batches
+      operationId: postBatches
+      x-operation-id-source: derived
+    get:
+      summary: Recent batches
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Batches
+      tags:
+      - Batches
+      operationId: getBatches
+      x-operation-id-source: derived
+  /batches/{id}:
+    get:
+      summary: 'Batch progress: counts, spend so far, dataset id'
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Batch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+      tags:
+      - Batches
+      operationId: getBatchesById
+      x-operation-id-source: derived
+  /batches/{id}/items:
+    get:
+      summary: Items of a batch (filter by status, cursor = last seq)
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - queued
+          - running
+          - done
+          - failed
+          - cancelled
+      - name: cursor
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          maximum: 1000
+      responses:
+        '200':
+          description: Items with nextCursor
+      tags:
+      - Batches
+      operationId: getBatchesByIdItems
+      x-operation-id-source: derived
+  /batches/{id}/cancel:
+    post:
+      summary: 'Cancel a batch: queued items dropped (never billed), running items finish'
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Batch
+        '409':
+          description: Batch already finished
+      tags:
+      - Batches
+      operationId: postBatchesByIdCancel
+      x-operation-id-source: derived
+components:
+  schemas:
+    Batch:
+      type: object
+      properties:
+        batchId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - completed
+          - failed
+          - cancelled
+        tool:
+          type: string
+        provider:
+          type: string
+          nullable: true
+        endpoint:
+          type: string
+          nullable: true
+        capability:
+          type: string
+          nullable: true
+        concurrency:
+          type: integer
+        total:
+          type: integer
+        counts:
+          type: object
+          properties:
+            queued:
+              type: integer
+            running:
+              type: integer
+            done:
+              type: integer
+            failed:
+              type: integer
+            cancelled:
+              type: integer
+        progressPct:
+          type: number
+        estimateUsd:
+          type: number
+        spentUsd:
+          type: number
+        datasetId:
+          type: string
+          nullable: true
+        error:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+        completedAt:
+          type: string
+          nullable: true
+        hints:
+          type: object
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: ck_live_ API key or OAuth access token
