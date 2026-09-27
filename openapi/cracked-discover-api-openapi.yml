@@ -93,6 +93,25 @@ components:
           $ref: '#/components/schemas/Metrics'
         score:
           type: number
+    Metrics:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - healthy
+          - stable
+          - degraded
+          - outage
+          - unknown
+        samples:
+          type: integer
+        successRate:
+          type: number
+          nullable: true
+        medianMs:
+          type: integer
+          nullable: true
     Price:
       type: object
       properties:
@@ -134,25 +153,6 @@ components:
               - estimate
             note:
               type: string
-    Metrics:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - healthy
-          - stable
-          - degraded
-          - outage
-          - unknown
-        samples:
-          type: integer
-        successRate:
-          type: number
-          nullable: true
-        medianMs:
-          type: integer
-          nullable: true
   securitySchemes:
     bearer:
       type: http

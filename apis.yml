@@ -28,8 +28,8 @@ tags:
   - SEO
   - social-media-data
   - E-Commerce
-  - Finance
   - Weather
+  - A2A
 tags_raw:
   - ai agents
   - agent tools
@@ -58,9 +58,9 @@ tags_raw:
   - SEO
   - social media data
   - ecommerce
-  - finance
   - weather
   - AI models
+  - A2A
 apis:
 - aid: cracked:cracked-apps-api
   name: Cracked API Apps API
@@ -527,3 +527,12 @@ x-enrichment:
   status: enriched
   artifacts_added: 34
   pass: local-v1
+x-tags-removed:
+- Finance
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://cracked.ai/.well-known/agent.json"
+  grade: "near-conformant"
+  protocol_version: "0.3.0"
+  control: 404
