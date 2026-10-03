@@ -94,6 +94,47 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Price:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - PER_CALL
+          - PER_RESULT
+          - PER_UNIT
+          - PER_SUCCESS
+          description: 'PER_SUCCESS: billed only when the capability''s miss predicate is false (misses are free)'
+        amount:
+          type: number
+        flatFee:
+          type: number
+        unit:
+          type: string
+        provenance:
+          type: object
+          description: Where the price came from
+          properties:
+            source:
+              type: string
+              enum:
+              - pricing_page
+              - api_docs
+              - observed
+              - estimate
+            sourceUrl:
+              type: string
+            checked:
+              type: string
+              format: date
+            confidence:
+              type: string
+              enum:
+              - confirmed
+              - list
+              - estimate
+            note:
+              type: string
     Run:
       type: object
       properties:
@@ -146,47 +187,6 @@ components:
         completedAt:
           type: string
           nullable: true
-    Price:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - PER_CALL
-          - PER_RESULT
-          - PER_UNIT
-          - PER_SUCCESS
-          description: 'PER_SUCCESS: billed only when the capability''s miss predicate is false (misses are free)'
-        amount:
-          type: number
-        flatFee:
-          type: number
-        unit:
-          type: string
-        provenance:
-          type: object
-          description: Where the price came from
-          properties:
-            source:
-              type: string
-              enum:
-              - pricing_page
-              - api_docs
-              - observed
-              - estimate
-            sourceUrl:
-              type: string
-            checked:
-              type: string
-              format: date
-            confidence:
-              type: string
-              enum:
-              - confirmed
-              - list
-              - estimate
-            note:
-              type: string
   securitySchemes:
     bearer:
       type: http
