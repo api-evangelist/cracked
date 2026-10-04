@@ -58,6 +58,25 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Metrics:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - healthy
+          - stable
+          - degraded
+          - outage
+          - unknown
+        samples:
+          type: integer
+        successRate:
+          type: number
+          nullable: true
+        medianMs:
+          type: integer
+          nullable: true
     Endpoint:
       type: object
       properties:
@@ -93,25 +112,6 @@ components:
           $ref: '#/components/schemas/Metrics'
         score:
           type: number
-    Metrics:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - healthy
-          - stable
-          - degraded
-          - outage
-          - unknown
-        samples:
-          type: integer
-        successRate:
-          type: number
-          nullable: true
-        medianMs:
-          type: integer
-          nullable: true
     Price:
       type: object
       properties:
