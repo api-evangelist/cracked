@@ -438,6 +438,9 @@ generated:
   confidence: 98
   at: '2026-09-03T03:16:46.735Z'
 common:
+- type: CapabilityMap
+  url: capabilities/cracked-capability-edges.yml
+  name: Cracked API Business Capability Map
 - type: MCPServer
   url: https://cracked.ai/mcp
 - type: AgentSkill
