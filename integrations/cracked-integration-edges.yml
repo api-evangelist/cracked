@@ -7,6 +7,7 @@ source:
 - https://composio.dev/toolkits/cracked
 - https://monid.ai/tools/cracked
 checked:
+- https://a2aregistry.org/api/agents
 - https://composio.dev/toolkits/cracked
 - https://monid.ai/tools/cracked
 - https://n8n.io/integrations/cracked/
@@ -31,7 +32,7 @@ edges:
     registered_name: io.github.systemsailab/cracked
     register_id: io.github.systemsailab/cracked
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-14'
+    detected: '2026-10-15'
   mcp_registry:
     servers:
     - io.github.systemsailab/cracked
@@ -47,4 +48,72 @@ edges:
   - remote-domain
   detected_by: sweep-agent-tools.py
   first_seen: '2026-10-14'
+- partner_name: A2A protocol (own Agent Card)
+  partner: null
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: A2A agent
+  evidence: https://cracked.ai/.well-known/agent.json
+  channel: provider-built
+  relationship: compatible
+  shape: a2a
+  evidence_kind: own-wellknown
+  degree: near-conformant
+  report_only: true
+  a2a_card:
+    grade: near-conformant
+    verdict: live
+    protocol_version: 0.3.0
+    deviations: []
+    card_subject: api
+  contract_reference:
+    register: provider's own /.well-known/agent-card.json
+    spec_file: null
+    standard: A2A
+    role: a2a-agent-card
+    registered_name: Cracked
+    organization: Cracked
+    matched_domain: cracked.ai
+    matched_by: own-domain
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-15'
+  detected_by: sweep-ai-agents.py
+  first_seen: '2026-10-15'
+- partner_name: a2aregistry.org
+  partner: null
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: A2A agent registry
+  evidence: https://a2aregistry.org/api/agents/c750f446-c40b-4cc5-b1f7-37289e5bfd64
+  channel: standard-directory
+  relationship: compatible
+  shape: a2a
+  evidence_kind: register-listing
+  degree: listed
+  report_only: true
+  a2a_register:
+    hosts:
+    - cracked.ai
+    conformance: true
+    task_conformance_working: false
+    healthy: true
+    signal_note: booleans over the provider's hosts; listings are context, never read
+  contract_reference:
+    register: a2aregistry.org /api/agents
+    spec_file: null
+    standard: A2A
+    role: a2a-registry-listing
+    registered_name: Cracked
+    matched_domain: cracked.ai
+    matched_by: domain
+    matched_via: card-host
+    listings_context: 1
+    sample_agents:
+    - Cracked
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-15'
+  detected_by: sweep-ai-agents.py
+  first_seen: '2026-10-15'
 templates: []
