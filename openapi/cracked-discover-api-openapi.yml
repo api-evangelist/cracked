@@ -58,60 +58,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Metrics:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - healthy
-          - stable
-          - degraded
-          - outage
-          - unknown
-        samples:
-          type: integer
-        successRate:
-          type: number
-          nullable: true
-        medianMs:
-          type: integer
-          nullable: true
-    Endpoint:
-      type: object
-      properties:
-        provider:
-          type: string
-        providerName:
-          type: string
-        endpoint:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        category:
-          type: string
-        price:
-          $ref: '#/components/schemas/Price'
-        status:
-          type: string
-          enum:
-          - live
-          - needs_key
-          - byok_only
-        verified:
-          type: boolean
-        async:
-          type: boolean
-        metrics:
-          $ref: '#/components/schemas/Metrics'
-        score:
-          type: number
     Price:
       type: object
       properties:
@@ -153,6 +99,60 @@ components:
               - estimate
             note:
               type: string
+    Endpoint:
+      type: object
+      properties:
+        provider:
+          type: string
+        providerName:
+          type: string
+        endpoint:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        price:
+          $ref: '#/components/schemas/Price'
+        status:
+          type: string
+          enum:
+          - live
+          - needs_key
+          - byok_only
+        verified:
+          type: boolean
+        async:
+          type: boolean
+        metrics:
+          $ref: '#/components/schemas/Metrics'
+        score:
+          type: number
+    Metrics:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - healthy
+          - stable
+          - degraded
+          - outage
+          - unknown
+        samples:
+          type: integer
+        successRate:
+          type: number
+          nullable: true
+        medianMs:
+          type: integer
+          nullable: true
   securitySchemes:
     bearer:
       type: http
