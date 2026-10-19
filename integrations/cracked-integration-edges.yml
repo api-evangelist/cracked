@@ -8,10 +8,17 @@ source:
 - https://monid.ai/tools/cracked
 checked:
 - https://a2aregistry.org/api/agents
+- https://api.nuget.org/v3
 - https://composio.dev/toolkits/cracked
+- https://crates.io/api/v1
 - https://monid.ai/tools/cracked
 - https://n8n.io/integrations/cracked/
+- https://proxy.golang.org
+- https://pypi.org/pypi
 - https://registry.modelcontextprotocol.io/v0/servers
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/apps/cracked-api/integrations
 - https://zapier.com/apps/cracked/integrations
 summary: null
@@ -116,4 +123,52 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-ai-agents.py
   first_seen: '2026-10-15'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/cracked-ai
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: cracked-ai
+      version: 0.3.1
+      released: '2026-09-03'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/cracked-ai
+      repo_leg: domain:cracked.ai
+      publisher_leg: email:cracked.ai
+      matched_by: domain
+    - name: cracked-ai-sdk
+      version: 0.1.0
+      released: '2026-09-02'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/cracked-ai-sdk
+      repo_leg: domain:cracked.ai
+      publisher_leg: email:cracked.ai
+      matched_by: domain
+    - name: cracked-ai-vercel
+      version: 0.1.0
+      released: '2026-09-02'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/cracked-ai-vercel
+      repo_leg: domain:cracked.ai
+      publisher_leg: email:cracked.ai
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 templates: []
